@@ -15,6 +15,10 @@ export class ProductComponent implements OnInit{
   public products: Product[] = [];
   public editProduct: Product = new Product();
   public deleteProduct: Product = new Product();
+  public addProduct: Product = new Product();
+  public display: String = "none";
+  public display2: String = "none";
+  public display3: String = "none";
 
   constructor(private productService: ProductService){
 
@@ -37,12 +41,15 @@ export class ProductComponent implements OnInit{
   }
 
   public onAddProduct(addForm: NgForm): void {
-    document.getElementById('add-product-form').click();
+    const container = document.getElementById('add-product-form');
+     if(container != null)
+          {container.click();}
     this.productService.addProduct(addForm.value).subscribe(
       (response: Product) => {
         console.log(response);
         this.getProducts();
         addForm.reset();
+        this.onCloseHandled();
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -89,27 +96,58 @@ export class ProductComponent implements OnInit{
     }
   }
 
-  public onOpenModal(product: Product/*|null*/, mode: string): void {
-    const container = document.getElementById('main-container');
+  public onOpenModal(product: Product, mode: string): void {
+    /*const container = document.getElementById('main-container');
     const button = document.createElement('button');
     button.type = 'button';
     button.style.display = 'none';
-    button.setAttribute('data-toggle', 'modal');
+    button.setAttribute('data-bs-toggle', 'modal');*/
     if (mode === 'add') {
-      button.setAttribute('data-target', '#addProductModal');
+      //this.display = "block";
+      //button.setAttribute('data-bs-target', '#addProductModal');
+      this.display = "block";
     }
     if (mode === 'edit') {
-      this.editProduct = product;
-      button.setAttribute('data-target', '#updateProductModal');
+      //this.editProduct = product;
+      //button.setAttribute('data-bs-target', '#updateProductModal');
+      this.display2 = "block";
     }
     if (mode === 'delete') {
-      this.deleteProduct = product;
-      button.setAttribute('data-target', '#deleteProductModal');
+      //this.deleteProduct = product;
+      //button.setAttribute('data-bs-target', '#deleteProductModal');
+      this.display3 = "block";
     }
-    container.appendChild(button);
-    button.click();
+    //if(container != null)
+      //{container.appendChild(button);
+      //}
+    //button.click();
+     //this.display = "block";
+
   }
+/*
+   public onOpenModal2(product: Product, mode: string): void {
+     if (mode === 'edit') {
+        this.display3 = "block";
+   }
 
+   public onOpenModal3(product: Product, mode: string): void {
+     if (mode === 'delete') {
+        this.display3 = "block";
+   }
+*/
+   onCloseHandled() {
+      this.display = "none";
 
+    }
+
+   onCloseHandled2() {
+      this.display2 = "none";
+
+   }
+
+   onCloseHandled3() {
+      this.display3 = "none";
+
+   }
 
 }
