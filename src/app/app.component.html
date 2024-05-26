@@ -1,130 +1,29 @@
 <style>
-  :host {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-    font-size: 14px;
-    color: #333;
-    box-sizing: border-box;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
 
-  body {
-  margin: 0;
-  padding: 0;
-}
-
-  p {
-    margin: 0;
-  }
-
-  #navbar {
-    position: sticky;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 60px;
-    display: flex;
-    align-items: center;
-    background-color: #000000;
-    color: white;
-    font-weight: 600;
-  }
-
-  .content {
-    display: flex;
-    margin: 82px auto 32px;
-    padding: 0 16px;
-    max-width: 960px;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  svg.material-icons {
-    height: 24px;
-    width: auto;
-  }
-
-  svg.material-icons:not(:last-child) {
-    margin-right: 8px;
-  }
-
-  li#menu_cart {
-    margin-left: 0px;
-  }
-  li#menu_login {
-    margin-left: 850px;
-  }
-  li#menu_home {
-    margin-left: 100px;
-  }
-  span#welcome {
-    margin-left: 15px;
-  }
-
-  @media screen and (max-width: 575px) {
-
-  }
-
-  ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  background-color: #333;
-}
-
-li {
-  float: left;
-}
-
-li a {
-  display: block;
-  color: white;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-}
-
-li a:hover {
-  background-color: #3a3a3a;
-}
-
-#logo_case
-{
-  background-color: #000000;
-}
-
-#logo{
-  color: #ffffff;
-  padding-left: 100px;
-  padding-top: 20px;
-  font-size: 35px;
-}
-
-
-::ng-deep * {
-
-      margin: 0;
-      padding: 0;
-    }
 
 </style>
 
-<!-- logo -->
+<!-- logo
 <div id="logo_case">
    <p id="logo">Inventory Management App</p>
   </div>
+-->
 
-<!-- menu -->
+<!--
 <ul id="navbar">
   <li id="menu_home"><a routerLink='/home'>Home</a></li>
   <li><a routerLink='/product'>Products</a></li>
-  <!--
+  <li><a routerLink='/category'>Categories</a></li>
+  <li><a routerLink='/user'>Users</a></li>
+  <li><a routerLink='/registration'>Register</a></li>
+  <li><a routerLink='/login'>Login</a></li>
+  <li *ngIf="loggedUser && loggedUser.role === 'USER'" id="logo">Inventory Management App<li>
+
   <li><a routerLink='/contact'>Contact</a></li>
   <li><a routerLink='/about'>About</a></li>
   <li id="menu_login"><a routerLink='/login'>Login</a></li>
-  -->
-</ul>
+
+</ul> -->
 <!--
 <div class="content" role="main">
 

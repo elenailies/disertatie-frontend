@@ -1,1 +1,30 @@
+<!-- menu -->
+<ul id="navbar">
+  <li id="menu_home"><a routerLink='/home'>Home</a></li>
+  <li *ngIf="loggedUser && loggedUser.role === 'ADMIN'"><a routerLink='/user'>Users</a></li>
+  <!--<li id="logo">Touristic transportation<li>-->
+  <li><a routerLink='/contact'>Contact</a></li>
+  <li><a routerLink='/about'>About</a></li>
+  <li  *ngIf="loggedUser && loggedUser.role === 'VISITOR'"><a routerLink='/registration'>Register</a></li>
+  <li  *ngIf="loggedUser && loggedUser.role === 'VISITOR'"><a routerLink='/login'>Login</a></li>
+  <li *ngIf="loggedUser && loggedUser.role === 'USER'"><a routerLink='/logout'>Logout</a></li>
+</ul>
+
 <p>user works!</p>
+
+<div>
+  <form #addForm="ngForm" (ngSubmit)="onAddUser(addForm)">
+    <div>
+      <input type="text" ngModel name="username"  id="username" placeholder="" required>
+    </div>
+
+    <div>
+      <input type="text" ngModel name="password" id="password" placeholder="" required>
+    </div>
+
+    <div>
+      <button [disabled]="addForm.invalid" type="submit" >Register</button>
+    </div>
+  </form>
+</div>
+
