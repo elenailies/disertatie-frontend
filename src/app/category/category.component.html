@@ -1,0 +1,145 @@
+<!-- menu -->
+<ul id="navbar">
+  <li id="menu_home"><a routerLink='/home'>Home</a></li>
+  <li *ngIf="loggedUser && loggedUser.role === 'ADMIN'"><a routerLink='/user'>Users</a></li>
+  <!--<li id="logo">Touristic transportation<li>-->
+  <li><a routerLink='/contact'>Contact</a></li>
+  <li><a routerLink='/about'>About</a></li>
+  <li  *ngIf="loggedUser && loggedUser.role === 'USER'"><a routerLink='/category'>Categories</a></li>
+  <li  *ngIf="loggedUser && loggedUser.role === 'USER'"><a routerLink='/destination'>Destinations</a></li>
+  <li  *ngIf="loggedUser && loggedUser.role === 'VISITOR'"><a routerLink='/registration'>Register</a></li>
+  <li  *ngIf="loggedUser && loggedUser.role === 'VISITOR'"><a routerLink='/login'>Login</a></li>
+  <li *ngIf="loggedUser && loggedUser.role === 'USER'"><a routerLink='/logout'>Logout</a></li>
+</ul>
+
+<p>category works!</p>
+
+<div class = "search">
+  <form>
+    <input type="search" (ngModelChange)="searchCategories(key.value)" #key="ngModel" ngModel
+           name="key" id="searchName" class="form-control mr-sm-2" placeholder="Search categories..." required>
+  </form>
+</div>
+<div class = "add_p">
+        <a class="button" (click)="onOpenModal(addCategory, 'add')">Add Category</a>
+</div>
+
+
+<div class="container" id="main-container" class="container_margin">
+  <div class="row">
+      <div *ngFor="let category of categories">
+        <div class="card">
+          <div class="card-body">
+
+            <div class="card-title align-self-center">
+              <h5>Name: {{category.name}}</h5>
+            </div>
+
+
+          </div>
+          <div class="card-body">
+            <div class="float-right btn-group btn-group-sm edit_delete_buttons">
+              <a (click)="onOpenModal(category, 'edit')" class="btn btn-primary tooltips" data-placement="top" data-original-title="Edit" ><i class="fa fa-pencil"></i> </a>
+              <a (click)="onOpenModal(category, 'delete')" class="btn btn-secondary tooltips" data-placement="top" data-original-title="Delete"><i class="fa fa-times"></i></a>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+
+
+<!--<div [ngStyle]="{'display':display}">Text de afisat</div>-->
+  <!-- Add Category Modal -->
+  <div class="modal" id="addCategoryModal" role="dialog" [ngStyle]="{'display':display}">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h6 class="modal-title" id="addCategoryModalLabel">Add Category</h6>
+          <button (click)="onCloseHandled()" type="button" class="close" data-dismiss="modal" aria-label="Close" >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form #addForm="ngForm" (ngSubmit)="onAddCategory(addForm)">
+            <div class="form-group">
+              <!--<label for="name">Name</label>-->
+              <input type="text" ngModel name="name" class="form-control form_input" id="name" placeholder="Name" required>
+            </div>
+
+
+
+            <div class="modal-footer">
+              <button  (click)="onCloseHandled()" type="button" id="add-category-form" class="btn btn-secondary button" data-dismiss="modal" >Close</button>
+              <button [disabled]="addForm.invalid" type="submit" class="btn btn-primary button" >Save changes</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Modal -->
+  <div class="modal" id="updateCategoryModal" role="dialog" [ngStyle]="{'display':display2}">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h6 class="modal-title" id="updateCategoryModalLabel">Edit Category {{editCategory.name}}</h6>
+          <button (click)="onCloseHandled2()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form #editForm="ngForm">
+            <div class="form-group">
+              <!--<label for="name">Name</label>-->
+              <input type="text" ngModel="{{editCategory.name}}" name="name" class="form-control form_input" id="name" placeholder="Name">
+            </div>
+            <input type="hidden" ngModel="{{editCategory.id}}" name="id" class="form-control" id="id" placeholder="Email">
+
+
+
+
+            <div class="modal-footer">
+              <button (click)="onCloseHandled2()" type="button" id="" data-dismiss="modal" class="btn btn-secondary button">Close</button>
+              <button (click)="onUpdateCategory(editForm.value)" data-dismiss="modal" class="btn btn-primary button" >Save changes</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete Modal -->
+  <div class="modal" id="deleteCategoryModal" role="dialog" [ngStyle]="{'display':display3}">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h6 class="modal-title" id="deleteModelLabel">Delete Category</h6>
+          <button (click)="onCloseHandled3()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p class="modal_text">Are you sure you want to delete category {{deleteCategory.name}}?</p>
+          <div class="modal-footer">
+            <button (click)="onCloseHandled3()" type="button" class="btn btn-secondary button" data-dismiss="modal">No</button>
+            <button (click)="onDeleteCategory(deleteCategory.id)" class="btn btn-danger button" data-dismiss="modal">Yes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<!-- Notification for no Categories -->
+<div *ngIf="categories.length == 0" class="col-lg-12 col-md-12 col-xl-12">
+  <div class="alert alert-info" role="alert">
+    <h4 class="alert-heading">No categories!</h4>
+    <p>No Categories were found.</p>
+  </div>
+</div>
+</div>
+
+ <footer>
+        <p>&copy; 2024 Touristic Transport Firm.</p>
+ </footer>

@@ -1,3 +1,52 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Touristic Transport Firm</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #333;
+        }
+        nav a {
+            color: white;
+            padding: 14px 20px;
+            text-decoration: none;
+            text-align: center;
+        }
+        nav a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+        .container {
+            padding: 20px;
+            text-align: center;
+        }
+        .services, .about, .testimonials, .contact {
+            margin: 20px 0;
+        }
+        .services div, .testimonials div {
+            display: inline-block;
+            width: 30%;
+            margin: 1%;
+            padding: 1%;
+            border: 1px solid white;
+            border-radius: 8px;
+        }
+
+    </style>
+</head>
+
+<header>
+        <h1>Welcome to Our Touristic Transport Firm</h1>
+        <p>Your journey starts with us!</p>
+</header>
 
 <!-- menu -->
 <ul id="navbar">
@@ -6,106 +55,65 @@
   <!--<li id="logo">Touristic transportation<li>-->
   <li><a routerLink='/contact'>Contact</a></li>
   <li><a routerLink='/about'>About</a></li>
+  <li  *ngIf="loggedUser && loggedUser.role === 'USER'"><a routerLink='/category'>Categories</a></li>
+  <li  *ngIf="loggedUser && loggedUser.role === 'USER'"><a routerLink='/destination'>Destinations</a></li>
   <li  *ngIf="loggedUser && loggedUser.role === 'VISITOR'"><a routerLink='/registration'>Register</a></li>
   <li  *ngIf="loggedUser && loggedUser.role === 'VISITOR'"><a routerLink='/login'>Login</a></li>
   <li *ngIf="loggedUser && loggedUser.role === 'USER'"><a routerLink='/logout'>Logout</a></li>
 </ul>
 
 <p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
-<p>home works!</p>
 
+
+    <div class="container">
+        <section id="services" class="services">
+            <h2>Our Services</h2>
+            <div>
+                <h3>City Tours</h3>
+                <p>Explore the city with our guided tours.</p>
+            </div>
+            <div>
+                <h3>Airport Transfers</h3>
+                <p>Reliable and prompt airport transfer services.</p>
+            </div>
+            <div>
+                <h3>Private Chauffeur</h3>
+                <p>Luxury vehicles with professional drivers.</p>
+            </div>
+        </section>
+
+        <section id="about" class="about">
+            <h2>About Us</h2>
+            <p>We are a dedicated transport firm with over 10 years of experience in providing top-notch services to tourists. Our mission is to make your travel comfortable, safe, and memorable.</p>
+        </section>
+
+        <section id="testimonials" class="testimonials">
+            <h2>Testimonials</h2>
+            <div>
+                <p>"The best city tour experience we've ever had. Highly recommend!" - John Doe</p>
+            </div>
+            <div>
+                <p>"Prompt and reliable airport transfers. Will use again!" - Jane Smith</p>
+            </div>
+            <div>
+                <p>"Luxury at its best with professional chauffeurs. Great service!" - Michael Brown</p>
+            </div>
+        </section>
+
+        <section id="contact" class="contact">
+            <h2>Contact Us</h2>
+            <p>Email: contact@touristictransportfirm.com</p>
+            <p>Phone: +123-456-7890</p>
+            <p>Address: 123 Transport St, Travel City, Country</p>
+        </section>
+    </div>
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <footer>
+        <p>&copy; 2024 Touristic Transport Firm.</p>
+    </footer>

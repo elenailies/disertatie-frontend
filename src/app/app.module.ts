@@ -11,7 +11,10 @@ import { LoginComponent } from './login/login.component';
 import { LogoutComponent } from './logout/logout.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { CategoryComponent } from './category/category.component';
+import { DestinationComponent } from './destination/destination.component';
+import { TripComponent } from './trip/trip.component';
 //import { LoginComponent } from './login/login.component';
+
 
 @NgModule({
   declarations: [
@@ -21,14 +24,17 @@ import { CategoryComponent } from './category/category.component';
     LoginComponent,
     LogoutComponent,
     RegistrationComponent,
-    CategoryComponent
+    CategoryComponent,
+    DestinationComponent,
+    TripComponent
 
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent]

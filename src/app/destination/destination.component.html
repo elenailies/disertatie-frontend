@@ -1,0 +1,181 @@
+<!-- menu -->
+<ul id="navbar">
+  <li id="menu_home"><a routerLink='/home'>Home</a></li>
+  <li *ngIf="loggedUser && loggedUser.role === 'ADMIN'"><a routerLink='/user'>Users</a></li>
+  <!--<li id="logo">Touristic transportation<li>-->
+  <li><a routerLink='/contact'>Contact</a></li>
+  <li><a routerLink='/about'>About</a></li>
+  <li  *ngIf="loggedUser && loggedUser.role === 'USER'"><a routerLink='/category'>Categories</a></li>
+  <li  *ngIf="loggedUser && loggedUser.role === 'USER'"><a routerLink='/destination'>Destinations</a></li>
+  <li  *ngIf="loggedUser && loggedUser.role === 'VISITOR'"><a routerLink='/registration'>Register</a></li>
+  <li  *ngIf="loggedUser && loggedUser.role === 'VISITOR'"><a routerLink='/login'>Login</a></li>
+  <li *ngIf="loggedUser && loggedUser.role === 'USER'"><a routerLink='/logout'>Logout</a></li>
+</ul>
+
+<p>destination works!</p>
+
+<div class = "search">
+  <form>
+    <input type="search" (ngModelChange)="searchDestinations(key.value)" #key="ngModel" ngModel
+           name="key" id="searchName" class="form-control mr-sm-2" placeholder="Search destinations..." required>
+  </form>
+</div>
+<div class = "add_p">
+        <a class="button" (click)="onOpenModal(addDestination, 'add')">Add Destination</a>
+</div>
+
+
+<div class="container" id="main-container" class="container_margin">
+  <div class="row">
+      <div *ngFor="let destination of destinations">
+        <div class="card">
+          <div class="card-body">
+
+            <div class="card-title align-self-center">
+              <h5>Name: {{destination.name}}</h5>
+            </div>
+            <div class="card-title align-self-center">
+              <h5>Address: {{destination.address}}</h5>
+            </div>
+            <div class="card-title align-self-center">
+              <h5>Category: {{destination.category.name}}</h5>
+            </div>
+
+            <div>
+              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2848.8017574937053!2d26.060102176093476!3d44.43722857107573!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40b201dd97d58297%3A0x301135551489fb73!2s%22Dimitrie%20Br%C3%A2ndz%C4%83%22%20Botanical%20Garden!5e0!3m2!1sen!2sro!4v1716819685168!5m2!1sen!2sro" width="545" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+
+          </div>
+          <div class="card-body">
+            <div class="float-right btn-group btn-group-sm edit_delete_buttons">
+              <a (click)="onOpenModal(destination, 'edit')" class="btn btn-primary tooltips" data-placement="top" data-original-title="Edit" ><i class="fa fa-pencil"></i> </a>
+              <a (click)="onOpenModal(destination, 'delete')" class="btn btn-secondary tooltips" data-placement="top" data-original-title="Delete"><i class="fa fa-times"></i></a>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+
+
+<!--<div [ngStyle]="{'display':display}">Text de afisat</div>-->
+  <!-- Add Destination Modal -->
+  <div class="modal" id="addDestinationModal" role="dialog" [ngStyle]="{'display':display}">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h6 class="modal-title" id="addDestinationModalLabel">Add Destination</h6>
+          <button (click)="onCloseHandled()" type="button" class="close" data-dismiss="modal" aria-label="Close" >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form #addForm="ngForm" (ngSubmit)="onAddDestination(addForm)">
+            <div class="form-group">
+              <!--<label for="name">Name</label>-->
+              <input type="text" ngModel name="name" class="form-control form_input" id="name" placeholder="Name" required>
+            </div>
+
+            <div class="form-group">
+              <!--<label for="address">Address</label>-->
+              <input type="text" ngModel name="address" class="form-control form_input" id="address" placeholder="Address" required>
+            </div>
+
+            <div>
+              <select ngModel name="category" class="form-control form_input" id="category" required>
+                <option *ngFor="let category of categories" [ngValue]="category">{{ category.name }}</option>
+              </select>
+            </div>
+
+            <div class="modal-footer">
+              <button  (click)="onCloseHandled()" type="button" id="add-destination-form" class="btn btn-secondary button" data-dismiss="modal" >Close</button>
+              <button [disabled]="addForm.invalid" type="submit" class="btn btn-primary button" >Save changes</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Modal -->
+  <div class="modal" id="updateDestinationModal" role="dialog" [ngStyle]="{'display':display2}">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h6 class="modal-title" id="updateDestinationModalLabel">Edit Destination {{editDestination.name}}</h6>
+          <button (click)="onCloseHandled2()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form #editForm="ngForm">
+            <div class="form-group">
+              <!--<label for="name">Name</label>-->
+              <input type="text" ngModel="{{editDestination.name}}" name="name" class="form-control form_input" id="name" placeholder="Name">
+            </div>
+            <input type="hidden" ngModel="{{editDestination.id}}" name="id" class="form-control" id="id" placeholder="Email">
+
+             <div class="form-group">
+              <!--<label for="address">Address</label>-->
+              <input type="text" ngModel="{{editDestination.address}}" name="address" class="form-control form_input" id="address" placeholder="Address">
+            </div>
+
+            <div>
+              <select ngModel name="category" class="form-control form_input" id="category" required>
+                <option *ngFor="let category of categories" [ngValue]="category">{{ category.name }}</option>
+              </select>
+            </div>
+
+            <div class="modal-footer">
+              <button (click)="onCloseHandled2()" type="button" id="" data-dismiss="modal" class="btn btn-secondary button">Close</button>
+              <button (click)="onUpdateDestination(editForm.value)" data-dismiss="modal" class="btn btn-primary button" >Save changes</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete Modal -->
+  <div class="modal" id="deleteDestinationModal" role="dialog" [ngStyle]="{'display':display3}">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h6 class="modal-title" id="deleteModelLabel">Delete Destination</h6>
+          <button (click)="onCloseHandled3()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p class="modal_text">Are you sure you want to delete destination {{deleteDestination.name}}?</p>
+          <div class="modal-footer">
+            <button (click)="onCloseHandled3()" type="button" class="btn btn-secondary button" data-dismiss="modal">No</button>
+            <button (click)="onDeleteDestination(deleteDestination.id)" class="btn btn-danger button" data-dismiss="modal">Yes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<!-- Notification for no Destinations -->
+<div *ngIf="destinations.length == 0" class="col-lg-12 col-md-12 col-xl-12">
+  <div class="alert alert-info" role="alert">
+    <h4 class="alert-heading">No destinations!</h4>
+    <p>No Destinations were found.</p>
+  </div>
+</div>
+</div>
+
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<footer>
+        <p>&copy; 2024 Touristic Transport Firm.</p>
+</footer>
