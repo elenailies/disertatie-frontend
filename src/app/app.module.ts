@@ -13,6 +13,11 @@ import { RegistrationComponent } from './registration/registration.component';
 import { CategoryComponent } from './category/category.component';
 import { DestinationComponent } from './destination/destination.component';
 import { TripComponent } from './trip/trip.component';
+//import { UserTripDetailsComponent } from './user-trip-details/user-trip-details.component';
+import { userTripBookingComponent } from './user-trip-booking/user-trip-booking.component';
+import { userBookedTripsComponent } from './user-booked-trips/user-booked-trips.component';
+import { questionComponent } from './question/question.component';
+import { answerComponent } from './answer/answer.component';
 //import { LoginComponent } from './login/login.component';
 
 
@@ -26,7 +31,12 @@ import { TripComponent } from './trip/trip.component';
     RegistrationComponent,
     CategoryComponent,
     DestinationComponent,
-    TripComponent
+    TripComponent,
+   // UserTripDetailsComponent,
+    userTripBookingComponent,
+    userBookedTripsComponent,
+    questionComponent,
+    answerComponent
 
   ],
   imports: [

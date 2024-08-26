@@ -1,4 +1,6 @@
-export class User{
+import { UserTripDetails } from './userTripDetails';
+
+export class User {
   id: number = 0;
   username: string = '';
   password: string = '';
@@ -8,4 +10,6 @@ export class User{
   phone: string = '';
   role: string = 'VISITOR';
 
+  // Linking to UserTripDetails
+  userTripDetails: UserTripDetails[] = [];
 }

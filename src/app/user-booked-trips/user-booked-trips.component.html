@@ -1,0 +1,47 @@
+<!--
+<ul id="navbar">
+  <li><a routerLink='/home'>Home</a></li>
+  <li><a routerLink='/contact'>Contact</a></li>
+  <li><a routerLink='/about'>About</a></li>
+  <li><a routerLink='/trip'>Trips</a></li>
+  <li><a routerLink='/logout'>Logout</a></li>
+</ul>
+
+<p>User Booked Trips works!</p>
+
+<div class="container">
+  <div *ngFor="let booking of userTripDetails" class="card">
+    <div class="card-body">
+      <h5 class="card-title">{{booking.trip.name}}</h5>
+      <p>Start Time: {{booking.trip.startTime}}</p>
+      <p>End Time: {{booking.trip.endTime}}</p>
+      <p>Ticket Price: ${{booking.trip.ticketPrice}}</p>
+      <p>Booking Date: {{booking.bookingDate}}</p>
+    </div>
+  </div>
+
+  <div *ngIf="userTripDetails.length == 0">
+    <div class="alert alert-info" role="alert">
+      <h4 class="alert-heading">No booked trips!</h4>
+      <p>You haven't booked any trips yet.</p>
+    </div>
+  </div>
+</div>-->
+
+<div *ngIf="userTripDetails.length > 0">
+  <h2>User Trips</h2>
+  <ul>
+    <li *ngFor="let userTripDetail of userTripDetails">
+      User: {{userTripDetail.user.username}}
+      <br/>
+      Trip: {{userTripDetail.trip.name}}
+      <br/>
+      Booking date: {{userTripDetail.bookingDate}}
+      <br/>
+    </li>
+  </ul>
+</div>
+
+<div *ngIf="userTripDetails.length === 0">
+  <p>No trips found for this user.</p>
+</div>

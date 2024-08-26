@@ -7,6 +7,12 @@ import { LoginComponent } from './login/login.component';
 import { LogoutComponent } from './logout/logout.component';
 import { CategoryComponent } from './category/category.component';
 import { DestinationComponent } from './destination/destination.component';
+import { TripComponent } from './trip/trip.component';
+import { userTripBookingComponent } from './user-trip-booking/user-trip-booking.component';
+import { userBookedTripsComponent } from './user-booked-trips/user-booked-trips.component';
+import { answerComponent } from './answer/answer.component';
+import { questionComponent } from './question/question.component';
+
 
 
 const routes: Routes = [
@@ -17,7 +23,12 @@ const routes: Routes = [
 {path: 'login', component: LoginComponent},
 {path: 'logout', component: LogoutComponent},
 {path: 'registration', component: RegistrationComponent},
-{path: 'destination', component: DestinationComponent}
+{path: 'destination', component: DestinationComponent},
+{path: 'trip', component: TripComponent},
+{path: 'bookings', component: userTripBookingComponent},
+{path: 'bookings/user', component: userBookedTripsComponent},
+{path: 'answer', component: answerComponent},
+{path: 'question', component: questionComponent}
 ];
 
 @NgModule({

@@ -1,0 +1,17 @@
+<div>
+  <h2>Questions</h2>
+  <ul>
+    <li *ngFor="let question of questions">
+      <span>{{ question.title }}</span>
+      <button (click)="viewQuestion(question.id)">View</button>
+      <button (click)="deleteQuestion(question.id)">Delete</button>
+    </li>
+  </ul>
+
+  <div>
+    <h3>Add New Question</h3>
+    <input [(ngModel)]="selectedQuestion.title" placeholder="Title" />
+    <textarea [(ngModel)]="selectedQuestion.description" placeholder="Description"></textarea>
+    <button (click)="addQuestion()">Add</button>
+  </div>
+</div>

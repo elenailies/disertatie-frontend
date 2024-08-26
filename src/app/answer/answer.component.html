@@ -1,0 +1,15 @@
+<div>
+  <h2>Answers</h2>
+  <ul>
+    <li *ngFor="let answer of answers">
+      <span>{{ answer.content }}</span>
+      <button (click)="deleteAnswer(answer.id)">Delete</button>
+    </li>
+  </ul>
+
+  <div>
+    <h3>Add New Answer</h3>
+    <textarea [(ngModel)]="newAnswer.content" placeholder="Content"></textarea>
+    <button (click)="addAnswer()">Add</button>
+  </div>
+</div>

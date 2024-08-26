@@ -1,33 +1,28 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Trip } from './trip.model';
+import { Trip } from './trip';
+import { environment } from 'src/environments/environment';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({providedIn: 'root'})
 export class TripService {
-  private apiUrl = 'http://localhost:8080/api/trips'; // Replace with your API URL
+  private apiServerUrl = environment.apiBaseUrl;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient){}
 
-  getTrips(): Observable<Trip[]> {
-    return this.http.get<Trip[]>(this.apiUrl);
+  public getTrips(): Observable<Trip[]> {
+    return this.http.get<Trip[]>(`${this.apiServerUrl}/trip/all`);
   }
 
-  getTrip(id: number): Observable<Trip> {
-    return this.http.get<Trip>(`${this.apiUrl}/${id}`);
+  public addTrip(trip: Trip): Observable<Trip> {
+    return this.http.post<Trip>(`${this.apiServerUrl}/trip/add`, trip);
   }
 
-  addTrip(trip: Trip): Observable<Trip> {
-    return this.http.post<Trip>(this.apiUrl, trip);
+  public updateTrip(trip: Trip): Observable<Trip> {
+    return this.http.put<Trip>(`${this.apiServerUrl}/trip/update`, trip);
   }
 
-  updateTrip(id: number, trip: Trip): Observable<Trip> {
-    return this.http.put<Trip>(`${this.apiUrl}/${id}`, trip);
-  }
-
-  deleteTrip(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  public deleteTrip(tripId: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiServerUrl}/trip/delete/${tripId}`);
   }
 }
