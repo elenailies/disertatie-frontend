@@ -87,12 +87,12 @@ export class questionComponent implements OnInit{
       (response: Question) => {
         console.log(response);
         this.getQuestions();
-        addForm.reset();
+        //addForm.reset();
         this.onCloseHandled();
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
-        addForm.reset();
+        //addForm.reset();
       }
     );
   }
