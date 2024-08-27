@@ -35,8 +35,10 @@
         <div class="card-body">
 
           <h5 class="card-title">Title: {{question.title}}</h5>
-          <p>Start Time: {{question.description}}</p>
-
+          <p>Content: {{question.description}}</p>
+          <div class="add_p">
+            <a class="button" (click)="onOpenModal(question, 'all')">View answers and respond</a>
+          </div>
         </div>
         <div class="card-body">
           <div class="float-right btn-group btn-group-sm edit_delete_buttons">
@@ -62,9 +64,12 @@
         </div>
         <div class="modal-body">
           <form #addForm="ngForm" (ngSubmit)="onAddQuestion(addForm)">
-            <!--<div class="form-group">
-              <input type="number" ngModel name="user" class="form-control form_input" id="user" placeholder="user">
-            </div>-->
+            <div>
+              <div>
+                <input [ngModel]="loggedUser" name="user" class="form-control form_input" id="user" readonly>
+              </div>
+
+            </div>
             <div class="form-group">
               <input type="text" ngModel name="title" class="form-control form_input" id="title" placeholder="title">
             </div>
@@ -94,6 +99,9 @@
         </div>
         <div class="modal-body">
           <form #editForm="ngForm">
+            <div>
+              <input ngModel="{{editQuestion.user}}" name="user" class="form-control form_input" id="user2" readonly>
+            </div>
             <div class="form-group">
               <input type="text" ngModel="{{editQuestion.title}}" name="title" class="form-control" placeholder="title">
             </div>
@@ -134,6 +142,65 @@
     </div>
   </div>
 
+  <!-- All Answers -->
+  <div class="modal" id="allQuestionModal" role="dialog" [ngStyle]="{'display':display4}">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h6 class="modal-title" id="allQuestionModalLabel">Answers</h6>
+          <button (click)="onCloseHandled4()" type="button" class="close" data-dismiss="modal" aria-label="Close" >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Title: {{viewQuestion.title}}</p>
+          <p>Content: {{viewQuestion.description}}</p>
+          <div class = "add_p">
+            <a class="button" (click)="onOpenModal2(addAnswer, viewQuestion, 'addA')">Respond</a>
+          </div>
+          <br/>
+          <br/>
+          <br/>
+          All answers:
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Answer Modal -->
+  <div class="modal" id="addAnswerModal" role="dialog" [ngStyle]="{'display':display5}">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h6 class="modal-title" id="addAnswerModalLabel">Add Answer</h6>
+          <button (click)="onCloseHandled()" type="button" class="close" data-dismiss="modal" aria-label="Close" >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form #addForm2="ngForm" (ngSubmit)="onAddAnswer(addForm2)">
+            <div>
+              <div>
+                <input [ngModel]="loggedUser" name="user" class="form-control form_input" id="user3" readonly>
+              </div>
+              <div>
+                <input [ngModel]="ansQuestion" name="question" class="form-control form_input" id="question" readonly>
+              </div>
+
+            </div>
+            <div class="form-group">
+              <input type="text" ngModel  name="content" class="form-control form_input" placeholder="content">
+            </div>
+
+            <div class="modal-footer">
+              <button  (click)="onCloseHandled5()" type="button" id="add-answer-form" class="btn btn-secondary button" data-dismiss="modal" >Close</button>
+              <button [disabled]="addForm2.invalid" type="submit" class="btn btn-primary button" >Respond</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Notification for no Questions -->
   <div *ngIf="questions.length == 0" class="col-lg-12 col-md-12 col-xl-12">

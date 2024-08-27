@@ -22,11 +22,11 @@ export class answerComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       const id = Number(params.get('id'));
       this.questionId = id;
-      this.loadAnswers(id);
+      //this.loadAnswers(id);
     });
   }
 
-  loadAnswers(questionId: number): void {
+  /*loadAnswers(questionId: number): void {
     this.answerService.getAnswersByQuestionId(questionId).subscribe((answers: Answer[]) => {
       this.answers = answers;
     });
@@ -44,5 +44,5 @@ export class answerComponent implements OnInit {
     this.answerService.deleteAnswer(id).subscribe(() => {
       this.loadAnswers(this.questionId);
     });
-  }
+  }*/
 }

@@ -7,6 +7,8 @@ import { NgForm } from '@angular/forms';
 import { OnInit } from '@angular/core';
 import { LocalStorage } from '@ngx-pwa/local-storage';
 import { User } from '../user';
+import { AnswerService } from '../answer.service';
+import { Answer } from '../answer';
 
 @Component({
   selector: 'app-question',
@@ -19,17 +21,29 @@ export class questionComponent implements OnInit{
   public editQuestion: Question = new Question();
   public deleteQuestion: Question = new Question();
   public addQuestion: Question = new Question();
+  public viewQuestion: Question = new Question();
   public display: String = "none";
   public display2: String = "none";
   public display3: String = "none";
+  public display4: String = "none";
+  public display5: String = "none";
   public loggedUser: User = new User();
 
   public selectedQuestionId: number = 0;
 
   //public userIdToFind: number = 0;
+  //getLoggedUser();
 
+  public answers: Answer[] = [];
+  public editAnswer: Answer = new Answer();
+  public deleteAnswer: Answer = new Answer();
+  public addAnswer: Answer = new Answer();
+  public viewAnswer: Answer = new Answer();
+  public ansQuestion: Question = new Question();
 
-  constructor(private questionService: QuestionService, private localStorage: LocalStorage){
+  public selectedAnswerId: number = 0;
+
+  constructor(private questionService: QuestionService, private answerService: AnswerService, private localStorage: LocalStorage){
 
      this.getLoggedUser();
 
@@ -64,7 +78,8 @@ export class questionComponent implements OnInit{
 
 
   public onAddQuestion(addForm: NgForm): void {
-    this.addQuestion.user = this.loggedUser;
+    //this.getLoggedUser();
+    //this.addQuestion.user = this.loggedUser;
     const container = document.getElementById('add-question-form');
      if(container != null)
           {container.click();}
@@ -146,6 +161,10 @@ export class questionComponent implements OnInit{
       //button.setAttribute('data-bs-target', '#deleteQuestionModal');
       this.display3 = "block";
     }
+    if (mode === 'all') {
+      this.viewQuestion = question;
+      this.display4 = "block";
+    }
     //if(container != null)
       //{container.appendChild(button);
       //}
@@ -153,18 +172,17 @@ export class questionComponent implements OnInit{
      //this.display = "block";
 
   }
-/*
-   public onOpenModal2(question: Question, mode: string): void {
-     if (mode === 'edit') {
-        this.display3 = "block";
-   }
 
-   public onOpenModal3(question: Question, mode: string): void {
-     if (mode === 'delete') {
-        this.display3 = "block";
-   }
-*/
-   onCloseHandled() {
+  public onOpenModal2(answer: Answer, question: Question, mode: string): void {
+
+    if (mode === 'addA') {
+        this.ansQuestion = question;
+        console.log("this.ansQuestion: ", this.ansQuestion);
+        this.display5 = "block";
+    }
+
+  }
+  onCloseHandled() {
       this.display = "none";
 
     }
@@ -177,6 +195,92 @@ export class questionComponent implements OnInit{
    onCloseHandled3() {
       this.display3 = "none";
 
+   }
+
+   onCloseHandled4() {
+      this.display4 = "none";
+
+   }
+
+   onCloseHandled5() {
+     this.display5 = "none";
+
+   }
+
+ public getAnswers(): void {
+     this.answerService.getAnswers().subscribe(
+       (response: Answer[]) => {
+         this.answers = response;
+         console.log(this.answers);
+       },
+       (error: HttpErrorResponse) => {
+         alert(error.message);
+       }
+     );
+   }
+
+
+   public onAddAnswer(addForm2: NgForm): void {
+     //this.getLoggedUser();
+     //this.addAnswer.user = this.loggedUser;
+     const container = document.getElementById('add-answer-form');
+      if(container != null)
+           {container.click();}
+     this.answerService.addAnswer(addForm2.value).subscribe(
+       (response: Answer) => {
+         console.log(response);
+         this.getAnswers();
+         addForm2.reset();
+         this.onCloseHandled();
+       },
+       (error: HttpErrorResponse) => {
+         alert(error.message);
+         addForm2.reset();
+       }
+     );
+   }
+
+
+   public onUpdateAnswer(answer: Answer): void {
+     this.answerService.updateAnswer(answer).subscribe(
+       (response: Answer) => {
+         console.log(response);
+         this.getAnswers();
+         this.onCloseHandled2();
+        // console.log("update se acceseaza");
+       },
+       (error: HttpErrorResponse) => {
+         alert(error.message);
+       }
+     );
+   }
+
+   public onDeleteAnswer(answerId: number): void {
+     this.answerService.deleteAnswer(answerId).subscribe(
+       (response: void) => {
+         console.log(response);
+         this.getAnswers();
+         this.onCloseHandled3();
+         //console.log("delete se acceseaza");
+       },
+       (error: HttpErrorResponse) => {
+         alert(error.message);
+       }
+     );
+   }
+
+   public searchAnswers(key: string): void {
+     console.log(key);
+     const results: Answer[] = [];
+     for (const answer of this.answers) {
+       if (answer.content.toLowerCase().indexOf(key.toLowerCase()) !== -1) {
+         results.push(answer);
+       }
+     }
+     this.answers = results;
+     if (results.length === 0 || !key) {
+       this.getAnswers();
+     }
    }
 
 }
