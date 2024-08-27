@@ -1,17 +1,149 @@
-<div>
-  <h2>Questions</h2>
-  <ul>
-    <li *ngFor="let question of questions">
-      <span>{{ question.title }}</span>
-      <button (click)="viewQuestion(question.id)">View</button>
-      <button (click)="deleteQuestion(question.id)">Delete</button>
-    </li>
-  </ul>
+<!-- menu -->
+<ul id="navbar">
+  <li id="menu_home"><a routerLink='/home'>Home</a></li>
+  <li *ngIf="loggedUser && loggedUser.role === 'ADMIN'"><a routerLink='/user'>Users</a></li>
+  <!--<li id="logo">Touristic transportation<li>-->
+  <li><a routerLink='/contact'>Contact</a></li>
+  <li><a routerLink='/about'>About</a></li>
+  <li  *ngIf="loggedUser && loggedUser.role === 'USER'"><a routerLink='/category'>Categories</a></li>
+  <li  *ngIf="loggedUser && loggedUser.role === 'USER'"><a routerLink='/destination'>Destinations</a></li>
+  <li  *ngIf="loggedUser && loggedUser.role === 'USER'"><a routerLink='/trip'>Trips</a></li>
+  <li  *ngIf="loggedUser && loggedUser.role === 'VISITOR'"><a routerLink='/registration'>Register</a></li>
+  <li  *ngIf="loggedUser && loggedUser.role === 'VISITOR'"><a routerLink='/login'>Login</a></li>
+  <li *ngIf="loggedUser && loggedUser.role === 'USER'"><a routerLink='/logout'>Logout</a></li>
+  <li *ngIf="loggedUser && loggedUser.role === 'USER'"><a routerLink='/bookings'>Book a trip</a></li>
+  <li *ngIf="loggedUser && loggedUser.role === 'USER'"><a routerLink='/question'>Help board</a></li>
+</ul>
 
-  <div>
-    <h3>Add New Question</h3>
-    <input [(ngModel)]="selectedQuestion.title" placeholder="Title" />
-    <textarea [(ngModel)]="selectedQuestion.description" placeholder="Description"></textarea>
-    <button (click)="addQuestion()">Add</button>
+<p>question works!</p>
+
+<div class = "search">
+  <form>
+    <input type="search" (ngModelChange)="searchQuestions(key.value)" #key="ngModel" ngModel
+           name="key" id="searchName" class="form-control mr-sm-2" placeholder="Search questions..." required>
+  </form>
+</div>
+<div class = "add_p">
+  <a class="button" (click)="onOpenModal(addQuestion, 'add')">Add Question</a>
+</div>
+
+
+<div class="container" id="main-container" class="container_margin">
+  <div class="row">
+    <div *ngFor="let question of questions">
+      <div class="card">
+        <div class="card-body">
+
+          <h5 class="card-title">Title: {{question.title}}</h5>
+          <p>Start Time: {{question.description}}</p>
+
+        </div>
+        <div class="card-body">
+          <div class="float-right btn-group btn-group-sm edit_delete_buttons">
+            <a (click)="onOpenModal(question, 'edit')" class="btn btn-primary tooltips" data-placement="top" data-original-title="Edit" ><i class="fa fa-pencil"></i> </a>
+            <a (click)="onOpenModal(question, 'delete')" class="btn btn-secondary tooltips" data-placement="top" data-original-title="Delete"><i class="fa fa-times"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!--<div [ngStyle]="{'display':display}">Text de afisat</div>-->
+  <!-- Add Question Modal -->
+  <div class="modal" id="addQuestionModal" role="dialog" [ngStyle]="{'display':display}">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h6 class="modal-title" id="addQuestionModalLabel">Add Question</h6>
+          <button (click)="onCloseHandled()" type="button" class="close" data-dismiss="modal" aria-label="Close" >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form #addForm="ngForm" (ngSubmit)="onAddQuestion(addForm)">
+            <!--<div class="form-group">
+              <input type="number" ngModel name="user" class="form-control form_input" id="user" placeholder="user">
+            </div>-->
+            <div class="form-group">
+              <input type="text" ngModel name="title" class="form-control form_input" id="title" placeholder="title">
+            </div>
+            <div class="form-group">
+              <input type="text" ngModel  name="description" class="form-control form_input" placeholder="description">
+            </div>
+
+            <div class="modal-footer">
+              <button  (click)="onCloseHandled()" type="button" id="add-question-form" class="btn btn-secondary button" data-dismiss="modal" >Close</button>
+              <button [disabled]="addForm.invalid" type="submit" class="btn btn-primary button" >Save changes</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Modal -->
+  <div class="modal" id="updateQuestionModal" role="dialog" [ngStyle]="{'display':display2}">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h6 class="modal-title" id="updateQuestionModalLabel">Edit Question {{editQuestion.title}}</h6>
+          <button (click)="onCloseHandled2()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form #editForm="ngForm">
+            <div class="form-group">
+              <input type="text" ngModel="{{editQuestion.title}}" name="title" class="form-control" placeholder="title">
+            </div>
+            <div class="form-group">
+              <input type="text" ngModel="{{editQuestion.description}}" name="description" class="description" placeholder="description">
+            </div>
+
+            <input type="hidden" ngModel="{{editQuestion.id}}" name="id" class="form-control" id="id" placeholder="Email">
+
+            <div class="modal-footer">
+              <button (click)="onCloseHandled2()" type="button" id="" data-dismiss="modal" class="btn btn-secondary button">Close</button>
+              <button (click)="onUpdateQuestion(editForm.value)" data-dismiss="modal" class="btn btn-primary button" >Save changes</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete Modal -->
+  <div class="modal" id="deleteQuestionModal" role="dialog" [ngStyle]="{'display':display3}">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h6 class="modal-title" id="deleteModelLabel">Delete Question</h6>
+          <button (click)="onCloseHandled3()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p class="modal_text">Are you sure you want to delete question {{deleteQuestion.title}}?</p>
+          <div class="modal-footer">
+            <button (click)="onCloseHandled3()" type="button" class="btn btn-secondary button" data-dismiss="modal">No</button>
+            <button (click)="onDeleteQuestion(deleteQuestion.id)" class="btn btn-danger button" data-dismiss="modal">Yes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Notification for no Questions -->
+  <div *ngIf="questions.length == 0" class="col-lg-12 col-md-12 col-xl-12">
+    <div class="alert alert-info" role="alert">
+      <h4 class="alert-heading">No questions!</h4>
+      <p>No Questions were found.</p>
+    </div>
   </div>
 </div>
+
+<footer>
+  <p>&copy; 2024 Touristic Transport Firm.</p>
+</footer>

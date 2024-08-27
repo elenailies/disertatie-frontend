@@ -4,18 +4,14 @@ import { Observable } from 'rxjs';
 import { Question } from './question';
 import { environment } from 'src/environments/environment';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({providedIn: 'root'})
 export class QuestionService {
   private apiServerUrl = environment.apiBaseUrl;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient){}
 
   public getQuestions(): Observable<Question[]> {
     return this.http.get<Question[]>(`${this.apiServerUrl}/question/all`);
-  }
-
-  public getQuestionById(id: number): Observable<Question> {
-    return this.http.get<Question>(`${this.apiServerUrl}/question/find/${id}`);
   }
 
   public addQuestion(question: Question): Observable<Question> {
