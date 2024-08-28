@@ -39,6 +39,7 @@
           <div class="add_p">
             <a class="button" (click)="onOpenModal(question, 'all')">View answers and respond</a>
           </div>
+
         </div>
         <div class="card-body">
           <div class="float-right btn-group btn-group-sm edit_delete_buttons">
@@ -162,6 +163,14 @@
           <br/>
           <br/>
           All answers:
+          <!-- Answers -->
+          <div class="answers-section">
+            <div *ngFor="let answer of getAnswersForQuestion(viewQuestion.id)" class="card">
+              <div class="card-body">
+                <p>Answer: {{answer.content}}</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -173,7 +182,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h6 class="modal-title" id="addAnswerModalLabel">Add Answer</h6>
-          <button (click)="onCloseHandled()" type="button" class="close" data-dismiss="modal" aria-label="Close" >
+          <button (click)="onCloseHandled5()" type="button" class="close" data-dismiss="modal" aria-label="Close" >
             <span aria-hidden="true">&times;</span>
           </button>
         </div>

@@ -219,6 +219,11 @@ export class questionComponent implements OnInit{
      );
    }
 
+ getAnswersForQuestion(questionId: number) {
+
+     return this.answers.filter(answer => answer.question.id === questionId);
+   }
+
 
    public onAddAnswer(addForm2: NgForm): void {
      //this.getLoggedUser();

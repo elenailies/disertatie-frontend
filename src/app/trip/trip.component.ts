@@ -1,12 +1,16 @@
 import { Component } from '@angular/core';
 
 import { Trip } from '../trip';
+import { Program } from '../program';
 import { TripService } from '../trip.service';
+import { ProgramService } from '../program.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NgForm } from '@angular/forms';
 import { OnInit } from '@angular/core';
 import { LocalStorage } from '@ngx-pwa/local-storage';
 import { User } from '../user';
+import { Destination } from '../destination';
+import { DestinationService } from '../destination.service';
 
 @Component({
   selector: 'app-trip',
@@ -22,14 +26,24 @@ export class TripComponent implements OnInit{
   public display: String = "none";
   public display2: String = "none";
   public display3: String = "none";
+  public display4: String = "none";
   public loggedUser: User = new User();
 
   public selectedTripId: number = 0;
 
   //public userIdToFind: number = 0;
 
+  public programs: Program[] = [];
+  public editProgram: Program = new Program();
+  public deleteProgram: Program = new Program();
+  public addProgram: Program = new Program();
+  public viewTrip: Trip = new Trip();
+  public destinations: Destination[] = [];
 
-  constructor(private tripService: TripService, private localStorage: LocalStorage){
+  public selectedProgramId: number = 0;
+
+
+  constructor(private tripService: TripService, private programService: ProgramService, private destinationService: DestinationService, private localStorage: LocalStorage){
 
      this.getLoggedUser();
 
@@ -48,6 +62,20 @@ export class TripComponent implements OnInit{
 
   ngOnInit() {
     this.getTrips();
+    this.getPrograms();
+    this.getDestinations();
+  }
+
+ public getDestinations(): void {
+    this.destinationService.getDestinations().subscribe(
+      (response: Destination[]) => {
+        this.destinations = response;
+        console.log(this.destinations);
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
   }
 
   public getTrips(): void {
@@ -138,6 +166,16 @@ export class TripComponent implements OnInit{
       this.display3 = "block";
     }
   }
+
+  public onOpenModal2(trip: Trip, program: Program, mode: string): void {
+
+     if (mode === 'add') {
+       this.viewTrip = trip;
+       this.display4 = "block";
+     }
+
+  }
+
    onCloseHandled() {
       this.display = "none";
     }
@@ -149,4 +187,84 @@ export class TripComponent implements OnInit{
    onCloseHandled3() {
       this.display3 = "none";
    }
+
+   onCloseHandled4() {
+      this.display4 = "none";
+   }
+
+    public getPrograms(): void {
+       this.programService.getPrograms().subscribe(
+         (response: Program[]) => {
+           this.programs = response;
+           console.log(this.programs);
+         },
+         (error: HttpErrorResponse) => {
+           alert(error.message);
+         }
+       );
+     }
+
+
+     public onAddProgram(addForm2: NgForm): void {
+       const container = document.getElementById('add-program-form');
+
+        if(container != null)
+             {container.click();}
+       this.programService.addProgram(addForm2.value).subscribe(
+         (response: Program) => {
+           console.log(response);
+           this.getPrograms();
+           //addForm2.reset();
+           this.onCloseHandled4();
+         },
+         (error: HttpErrorResponse) => {
+           alert(error.message);
+           //addForm2.reset();
+         }
+       );
+     }
+
+
+     public onUpdateProgram(program: Program): void {
+       this.programService.updateProgram(program).subscribe(
+         (response: Program) => {
+           console.log(response);
+           this.getPrograms();
+           this.onCloseHandled2();
+          // console.log("update se acceseaza");
+         },
+         (error: HttpErrorResponse) => {
+           alert(error.message);
+         }
+       );
+     }
+
+     public onDeleteProgram(programId: number): void {
+       this.programService.deleteProgram(programId).subscribe(
+         (response: void) => {
+           console.log(response);
+           this.getPrograms();
+           this.onCloseHandled3();
+           //console.log("delete se acceseaza");
+         },
+         (error: HttpErrorResponse) => {
+           alert(error.message);
+         }
+       );
+     }
+
+     /*public searchPrograms(key: string): void {
+       console.log(key);
+       const results: Program[] = [];
+       for (const program of this.programs) {
+         if (program.name.toLowerCase().indexOf(key.toLowerCase()) !== -1) {
+           results.push(program);
+         }
+       }
+       this.programs = results;
+       if (results.length === 0 || !key) {
+         this.getPrograms();
+       }
+     }*/
+
 }

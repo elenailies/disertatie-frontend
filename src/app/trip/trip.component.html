@@ -38,6 +38,10 @@
           <p>Ticket Price: ${{trip.ticketPrice}}</p>
           <p>Date: {{trip.date}}</p>
 
+          <div class = "add_p">
+            <a class="button" (click)="onOpenModal2(trip, addProgram, 'add')">Add Destination and time interval</a>
+          </div>
+
         </div>
         <div class="card-body">
           <div class="float-right btn-group btn-group-sm edit_delete_buttons">
@@ -144,6 +148,46 @@
             <button (click)="onCloseHandled3()" type="button" class="btn btn-secondary button" data-dismiss="modal">No</button>
             <button (click)="onDeleteTrip(deleteTrip.id)" class="btn btn-danger button" data-dismiss="modal">Yes</button>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Program Modal -->
+  <div class="modal" id="addAnswerModal" role="dialog" [ngStyle]="{'display':display4}">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h6 class="modal-title" id="addAnswerModalLabel">Add Destination and time interval</h6>
+          <button (click)="onCloseHandled4()" type="button" class="close" data-dismiss="modal" aria-label="Close" >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form #addForm2="ngForm" (ngSubmit)="onAddProgram(addForm2)">
+            <div>
+              <div>
+                <input [ngModel]="viewTrip" name="trip" class="form-control form_input" id="trip" readonly>
+              </div>
+              <div>
+                <select ngModel name="destination" class="form-control form_input" id="destination" required>
+                  <option *ngFor="let destination of destinations" [ngValue]="destination">{{ destination.name }}</option>
+                </select>
+              </div>
+
+            </div>
+            <div class="form-group">
+              <input type="text" ngModel  name="startTime" class="form-control form_input" placeholder="startTime">
+            </div>
+            <div class="form-group">
+              <input type="text" ngModel  name="endTime" class="form-control form_input" placeholder="endTime">
+            </div>
+
+            <div class="modal-footer">
+              <button  (click)="onCloseHandled4()" type="button" id="add-answer-form" class="btn btn-secondary button" data-dismiss="modal" >Close</button>
+              <button [disabled]="addForm2.invalid" type="submit" class="btn btn-primary button" >Add</button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
