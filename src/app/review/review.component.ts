@@ -25,6 +25,7 @@ export class ReviewComponent implements OnInit{
   public loggedUser: User = new User();
 
   public selectedReviewId: number = 0;
+  public totalRating: number = 0;
 
   //public userIdToFind: number = 0;
 
@@ -33,6 +34,10 @@ export class ReviewComponent implements OnInit{
 
      this.getLoggedUser();
 
+  }
+
+getTotalRating(): number {
+    return this.reviews.reduce((total, review) => total + review.rating, 0);
   }
 
   getLoggedUser() {
@@ -48,6 +53,7 @@ export class ReviewComponent implements OnInit{
 
   ngOnInit() {
     this.getReviews();
+    this.totalRating = this.getTotalRating();
   }
 
   public getReviews(): void {
