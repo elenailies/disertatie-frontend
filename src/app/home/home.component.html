@@ -63,6 +63,9 @@
   <li *ngIf="loggedUser && loggedUser.role === 'USER'"><a routerLink='/logout'>Logout</a></li>
   <li *ngIf="loggedUser && loggedUser.role === 'USER'"><a routerLink='/bookings'>Book a trip</a></li>
   <li *ngIf="loggedUser && loggedUser.role === 'USER'"><a routerLink='/question'>Help board</a></li>
+  <li *ngIf="loggedUser && loggedUser.role === 'VISITOR'"><a routerLink='/review'>Reviews</a></li>
+  <li *ngIf="loggedUser && loggedUser.role === 'USER'"><a routerLink='/review'>Reviews</a></li>
+
 </ul>
 
 <p>home works!</p>

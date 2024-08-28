@@ -12,6 +12,7 @@ import { userTripBookingComponent } from './user-trip-booking/user-trip-booking.
 import { userBookedTripsComponent } from './user-booked-trips/user-booked-trips.component';
 import { answerComponent } from './answer/answer.component';
 import { questionComponent } from './question/question.component';
+import { ReviewComponent } from './review/review.component';
 
 
 
@@ -28,7 +29,8 @@ const routes: Routes = [
 {path: 'bookings', component: userTripBookingComponent},
 {path: 'bookings/user', component: userBookedTripsComponent},
 {path: 'answer', component: answerComponent},
-{path: 'question', component: questionComponent}
+{path: 'question', component: questionComponent},
+{path: 'review', component: ReviewComponent}
 ];
 
 @NgModule({
