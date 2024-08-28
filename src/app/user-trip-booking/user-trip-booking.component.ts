@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 
 import { TripService } from '../trip.service';
 import { Trip } from '../trip';
-import { UserTripDetailsService } from '../userTripDetails.service';
+import { BookingService } from '../booking.service';
 import { User } from '../user';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NgForm } from '@angular/forms';
@@ -17,7 +17,7 @@ import { LocalStorage } from '@ngx-pwa/local-storage';
 })
 export class userTripBookingComponent implements OnInit {
 
-  trips: Trip[] = [];
+ /* trips: Trip[] = [];
   loggedUser: User = new User(); // This would typically be fetched from an auth service
   //public loggedUser: User = new User();
   public userIdToFind: number = 0;
@@ -38,12 +38,12 @@ export class userTripBookingComponent implements OnInit {
         });
 
     }
-
+*/
 
   ngOnInit(): void {
-    this.loadAvailableTrips();
+    //this.loadAvailableTrips();
   }
-
+/*
   loadAvailableTrips(): void {
     this.tripService.getTrips().subscribe(
       (trips) => {
@@ -67,6 +67,6 @@ export class userTripBookingComponent implements OnInit {
         alert('Failed to book the trip!');
       }
     );
-  }
+  }*/
 }
 

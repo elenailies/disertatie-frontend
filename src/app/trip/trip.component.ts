@@ -204,6 +204,11 @@ export class TripComponent implements OnInit{
        );
      }
 
+   getProgramForTrip(tripId: number) {
+
+        return this.programs.filter(program => program.trip.id === tripId);
+      }
+
 
      public onAddProgram(addForm2: NgForm): void {
        const container = document.getElementById('add-program-form');

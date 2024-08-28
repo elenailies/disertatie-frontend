@@ -1,5 +1,3 @@
-import { UserTripDetails } from './userTripDetails';
-
 export class User {
   id: number = 0;
   username: string = '';
@@ -9,7 +7,4 @@ export class User {
   email: string = '';
   phone: string = '';
   role: string = 'VISITOR';
-
-  // Linking to UserTripDetails
-  userTripDetails: UserTripDetails[] = [];
 }

@@ -18,6 +18,7 @@ import { userTripBookingComponent } from './user-trip-booking/user-trip-booking.
 import { userBookedTripsComponent } from './user-booked-trips/user-booked-trips.component';
 import { questionComponent } from './question/question.component';
 import { answerComponent } from './answer/answer.component';
+import { ReviewComponent } from './review/review.component';
 //import { LoginComponent } from './login/login.component';
 
 
@@ -36,7 +37,8 @@ import { answerComponent } from './answer/answer.component';
     userTripBookingComponent,
     userBookedTripsComponent,
     questionComponent,
-    answerComponent
+    answerComponent,
+    ReviewComponent
 
   ],
   imports: [

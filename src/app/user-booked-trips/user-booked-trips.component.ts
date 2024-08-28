@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { UserTripDetailsService } from '../userTripDetails.service';
-import { UserTripDetails } from '../userTripDetails';
+import { BookingService } from '../booking.service';
+import { Booking } from '../booking';
 import { User } from '../user';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NgForm } from '@angular/forms';
@@ -14,7 +14,7 @@ import { Trip } from '../trip';
 })
 export class userBookedTripsComponent implements OnInit {
 
-  userTripDetails: UserTripDetails[] = [];
+ /* userTripDetails: UserTripDetails[] = [];
   loggedUser: User = new User(); // This would typically be fetched from an auth service
   public userIdToFind: number = 0;
 
@@ -33,12 +33,12 @@ export class userBookedTripsComponent implements OnInit {
       // Once logged user is retrieved, call getUserTripDetails
       this.getUserTripDetails();
     });
-  }
+  }*/
 
   ngOnInit(): void {
     // The trips will be loaded once the user is fetched in the constructor
   }
-
+/*
   public getUserTripDetails(): void {
     this.userTripDetailsService.getUserTripDetails().subscribe(
       (response: UserTripDetails[]) => {
@@ -51,5 +51,5 @@ export class userBookedTripsComponent implements OnInit {
       }
     );
   }
-
+*/
 }
