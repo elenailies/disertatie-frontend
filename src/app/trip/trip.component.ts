@@ -146,7 +146,7 @@ export class TripComponent implements OnInit{
     );
   }
 
-  public searchTrips(key: string): void {
+ /* public searchTrips(key: string): void {
     console.log(key);
     const results: Trip[] = [];
     for (const trip of this.trips) {
@@ -158,7 +158,33 @@ export class TripComponent implements OnInit{
     if (results.length === 0 || !key) {
       this.getTrips();
     }
+  }*/
+
+  public searchTrips(key: string): void {
+      console.log(key);
+      const results: Trip[] = [];
+      for (const trip of this.trips) {
+        // Check if the trip name matches the search key
+        if (trip.name.toLowerCase().indexOf(key.toLowerCase()) !== -1) {
+          results.push(trip);
+        } else {
+          // Check if any of the destinations in the trip's programs match the search key
+          const programsForTrip = this.getProgramForTrip(trip.id);
+          for (const program of programsForTrip) {
+            if (program.destination.name.toLowerCase().indexOf(key.toLowerCase()) !== -1) {
+              results.push(trip);
+              break; // No need to check other programs for this trip
+            }
+          }
+        }
+      }
+
+      this.trips = results;
+      if (results.length === 0 || !key) {
+        this.getTrips();
+      }
   }
+
 
   public onOpenModal(trip: Trip, mode: string): void {
     if (mode === 'add') {

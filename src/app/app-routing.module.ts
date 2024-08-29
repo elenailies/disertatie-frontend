@@ -13,6 +13,7 @@ import { userBookedTripsComponent } from './user-booked-trips/user-booked-trips.
 import { answerComponent } from './answer/answer.component';
 import { questionComponent } from './question/question.component';
 import { ReviewComponent } from './review/review.component';
+import { EmailFormComponent } from './email-form/email-form.component';
 
 
 
@@ -30,7 +31,8 @@ const routes: Routes = [
 {path: 'bookings/user', component: userBookedTripsComponent},
 {path: 'answer', component: answerComponent},
 {path: 'question', component: questionComponent},
-{path: 'review', component: ReviewComponent}
+{path: 'review', component: ReviewComponent},
+{path: 'email', component: EmailFormComponent}
 ];
 
 @NgModule({

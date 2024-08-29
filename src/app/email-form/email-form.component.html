@@ -1,0 +1,16 @@
+<div>
+  <h2>Send Email</h2>
+  <form (ngSubmit)="sendEmail()">
+    <label for="to">To:</label>
+    <input type="email" id="to" [(ngModel)]="emailDetails.to" name="to" required />
+
+    <label for="subject">Subject:</label>
+    <input type="text" id="subject" [(ngModel)]="emailDetails.subject" name="subject" required />
+
+    <label for="text">Message:</label>
+    <textarea id="text" [(ngModel)]="emailDetails.text" name="text" required></textarea>
+
+    <button type="submit">Send</button>
+  </form>
+  <div *ngIf="message">{{ message }}</div>
+</div>

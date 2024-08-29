@@ -20,6 +20,7 @@ import { questionComponent } from './question/question.component';
 import { answerComponent } from './answer/answer.component';
 import { ReviewComponent } from './review/review.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { EmailFormComponent } from './email-form/email-form.component';
 //import { LoginComponent } from './login/login.component';
 
 
@@ -39,7 +40,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     userBookedTripsComponent,
     questionComponent,
     answerComponent,
-    ReviewComponent
+    ReviewComponent,
+    EmailFormComponent
 
   ],
   imports: [
