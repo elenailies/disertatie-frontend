@@ -56,7 +56,7 @@ export class LoginComponent implements OnInit{
 
      const matchingUser = this.existingUsers.find(
        (existingUser) =>
-         existingUser.username === this.user.username && existingUser.password === this.user.password
+         existingUser.email === this.user.email && existingUser.password === this.user.password
      );
 
      if (matchingUser) {

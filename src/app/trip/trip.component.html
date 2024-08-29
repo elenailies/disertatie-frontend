@@ -39,6 +39,9 @@
           <p>Nr Tickets: {{trip.nrTickets}}</p>
           <p>Date: {{trip.date}}</p>
 
+          <div class = "add_p">
+            <a class="button" (click)="onOpenModal3(trip, loggedUser, 'add')">Book Trip</a>
+          </div>
           Orar:
           <!-- Answers -->
           <div class="answers-section">
@@ -209,6 +212,51 @@
       </div>
     </div>
   </div>
+
+
+  <!-- Add Booking Modal -->
+  <div class="modal" id="addBookingModal" role="dialog" [ngStyle]="{'display':display5}">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h6 class="modal-title" id="addBookingModalLabel">Book Trip</h6>
+          <button (click)="onCloseHandled5()" type="button" class="close" data-dismiss="modal" aria-label="Close" >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form #addForm3="ngForm" (ngSubmit)="onAddBooking(addForm3)">
+            <div>
+              <div>
+                <input [ngModel]="viewTrip" name="trip" class="form-control form_input" id="trip2" readonly>
+              </div>
+              <div>
+                <input [ngModel]="loggedUser" name="user" class="form-control form_input" id="user" readonly>
+              </div>
+              <div>
+                <input name="bookingDate" class="form-control form_input" id="bookingDate" readonly>
+              </div>
+              <div>
+                <input name="totalCost" class="form-control form_input" id="totalCost" readonly>
+              </div>
+            </div>
+            <div class="form-group">
+              <input type="number" ngModel  name="nrTickets" class="form-control" placeholder="Nr Tickets">
+            </div>
+            <!--<div class="form-group">
+              <input type="text" ngModel  name="totalCost" class="form-control form_input" placeholder="totalCost">
+            </div>-->
+
+            <div class="modal-footer">
+              <button  (click)="onCloseHandled5()" type="button" id="add-booking-form" class="btn btn-secondary button" data-dismiss="modal" >Close</button>
+              <button [disabled]="addForm3.invalid" type="submit" class="btn btn-primary button" >Add</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
 
 
   <!-- Notification for no Trips -->

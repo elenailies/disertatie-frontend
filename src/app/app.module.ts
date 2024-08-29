@@ -19,6 +19,7 @@ import { userBookedTripsComponent } from './user-booked-trips/user-booked-trips.
 import { questionComponent } from './question/question.component';
 import { answerComponent } from './answer/answer.component';
 import { ReviewComponent } from './review/review.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 //import { LoginComponent } from './login/login.component';
 
 
@@ -46,6 +47,7 @@ import { ReviewComponent } from './review/review.component';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
+    BrowserAnimationsModule,
 
   ],
   providers: [],

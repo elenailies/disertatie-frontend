@@ -11,6 +11,8 @@ import { LocalStorage } from '@ngx-pwa/local-storage';
 import { User } from '../user';
 import { Destination } from '../destination';
 import { DestinationService } from '../destination.service';
+import { Booking } from '../booking';
+import { BookingService } from '../booking.service';
 
 @Component({
   selector: 'app-trip',
@@ -27,6 +29,7 @@ export class TripComponent implements OnInit{
   public display2: String = "none";
   public display3: String = "none";
   public display4: String = "none";
+  public display5: String = "none";
   public loggedUser: User = new User();
 
   public selectedTripId: number = 0;
@@ -40,10 +43,13 @@ export class TripComponent implements OnInit{
   public viewTrip: Trip = new Trip();
   public destinations: Destination[] = [];
 
-  public selectedProgramId: number = 0;
+  //public selectedProgramId: number = 0;
+
+  public bookings: Booking[] = [];
+  public addBooking: Booking = new Booking();
 
 
-  constructor(private tripService: TripService, private programService: ProgramService, private destinationService: DestinationService, private localStorage: LocalStorage){
+  constructor(private tripService: TripService, private programService: ProgramService, private bookingService: BookingService, private destinationService: DestinationService, private localStorage: LocalStorage){
 
      this.getLoggedUser();
 
@@ -63,6 +69,7 @@ export class TripComponent implements OnInit{
   ngOnInit() {
     this.getTrips();
     this.getPrograms();
+    this.getBookings();
     this.getDestinations();
   }
 
@@ -176,6 +183,16 @@ export class TripComponent implements OnInit{
 
   }
 
+  public onOpenModal3(trip: Trip, user: User, mode: string): void {
+
+     if (mode === 'add') {
+       this.viewTrip = trip;
+       //this.user = this.loggedUser;
+       this.display5 = "block";
+     }
+
+  }
+
    onCloseHandled() {
       this.display = "none";
     }
@@ -190,6 +207,10 @@ export class TripComponent implements OnInit{
 
    onCloseHandled4() {
       this.display4 = "none";
+   }
+
+   onCloseHandled5() {
+     this.display5 = "none";
    }
 
     public getPrograms(): void {
@@ -257,6 +278,68 @@ export class TripComponent implements OnInit{
          }
        );
      }
+
+    public onAddBooking(addForm3: NgForm): void {
+       const container = document.getElementById('add-booking-form');
+
+        const currentDateTime = new Date();
+        addForm3.value.bookingDate = currentDateTime;
+        const tickets = addForm3.value.nrTickets;
+        const totalCost = 0;
+        addForm3.value.totalCost = tickets * this.viewTrip.ticketPrice;
+
+    if (this.viewTrip) {
+        if (tickets <= this.viewTrip.nrTickets) {
+            console.log("Calatoria pentru care s-a facut booking: ", this.viewTrip);
+            console.log("Numarul de bilete pentru booking: ", tickets);
+
+            this.viewTrip.nrTickets -= tickets;
+
+            this.tripService.updateTrip(this.viewTrip).subscribe(
+                () => {
+                    console.log('Trip updated successfully');
+                    this.getTrips(); // Refresh trips list
+                },
+                (error: HttpErrorResponse) => {
+                    alert('Failed to update trip: ' + error.message);
+                }
+            );
+        } else {
+            alert('Not enough tickets available');
+            return;
+        }
+    } else {
+        alert('No trip data available');
+        return;
+    }
+
+        if(container != null)
+             {container.click();}
+       this.bookingService.addBooking(addForm3.value).subscribe(
+         (response: Booking) => {
+           console.log(response);
+           this.getBookings();
+           //addForm3.reset();
+           this.onCloseHandled();
+         },
+         (error: HttpErrorResponse) => {
+           alert(error.message);
+           //addForm3.reset();
+         }
+       );
+     }
+
+    public getBookings(): void {
+          this.bookingService.getBookings().subscribe(
+            (response: Booking[]) => {
+              this.bookings = response;
+              console.log(this.bookings);
+            },
+            (error: HttpErrorResponse) => {
+              alert(error.message);
+            }
+          );
+        }
 
      /*public searchPrograms(key: string): void {
        console.log(key);

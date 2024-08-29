@@ -37,7 +37,12 @@ export class ReviewComponent implements OnInit{
   }
 
 getTotalRating(): number {
-    return this.reviews.reduce((total, review) => total + review.rating, 0);
+    const totalReviews = this.reviews.length;
+      if (totalReviews === 0) {
+        return 0;
+      }
+      const totalRating = this.reviews.reduce((total, review) => total + review.rating, 0);
+      return totalRating / totalReviews;
   }
 
   getLoggedUser() {
@@ -53,7 +58,7 @@ getTotalRating(): number {
 
   ngOnInit() {
     this.getReviews();
-    this.totalRating = this.getTotalRating();
+    //this.totalRating = this.getTotalRating();
   }
 
   public getReviews(): void {
@@ -61,6 +66,7 @@ getTotalRating(): number {
       (response: Review[]) => {
         this.reviews = response;
         console.log(this.reviews);
+        this.totalRating = this.getTotalRating();
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
