@@ -13,7 +13,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class HomeComponent implements OnInit {
 
   public loggedUser: User = new User();
-  public toLogOut: boolean = true;
+  //public toLogOut: boolean = true;
   public tokens: Token[] = [];
 
   constructor(private localStorage: LocalStorage, private tokenService: TokenService) {
@@ -56,15 +56,16 @@ export class HomeComponent implements OnInit {
     const currentDate = new Date();
 
     const userTokens = this.tokens.filter(token => token.user.id === this.loggedUser.id);
-
+    console.log('userTokens:', userTokens);
     if (userTokens.length > 0) {
       let hasValidToken = false;
       for (let t of userTokens) {
-        if (new Date(t.expiryDate) >= currentDate && t.enabled) {
+        if (new Date(t.expiryDate) >= currentDate && t.enabled == true) {
           console.log('Unexpired and enabled Token:', t);
+          console.log('currentDate:', currentDate);
           hasValidToken = true;
-          this.toLogOut = false;
-          break;
+          //this.toLogOut = false;
+          //break;
         }
       }
       if (!hasValidToken) {
