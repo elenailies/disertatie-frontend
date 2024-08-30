@@ -16,11 +16,14 @@ export class EmailFormComponent {
   sendEmail() {
     this.emailService.sendEmail(this.emailDetails).subscribe(
       (response: any) => {
-        this.message = 'Email sent successfully!';
+        this.message = response.message;  // Access the message property from the JSON response
       },
       (error: HttpErrorResponse) => {
-        this.message = 'Error sending email.';
+        console.error('Error occurred:', error);
+        this.message = 'Error sending email. Please check console for details.';
       }
     );
   }
+
+
 }

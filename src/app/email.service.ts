@@ -7,13 +7,12 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class EmailService {
- private apiServerUrl = environment.apiBaseUrl;
- //`${this.apiServerUrl}/destination/all`
-  private apiUrl = `${this.apiServerUrl}/email/send`;
+  private apiUrl = `${environment.apiBaseUrl}/email/send`;
 
   constructor(private http: HttpClient) { }
 
   sendEmail(emailDetails: { to: string, subject: string, text: string }): Observable<any> {
     return this.http.post(this.apiUrl, emailDetails);
   }
+
 }
