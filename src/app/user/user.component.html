@@ -1,8 +1,7 @@
-<!-- menu -->
+<!-- Menu -->
 <ul id="navbar">
   <li id="menu_home"><a routerLink='/home'>Home</a></li>
   <li *ngIf="loggedUser && loggedUser.role === 'ADMIN'"><a routerLink='/user'>Users</a></li>
-  <!--<li id="logo">Touristic transportation<li>-->
   <li><a routerLink='/contact'>Contact</a></li>
   <li><a routerLink='/about'>About</a></li>
   <li  *ngIf="loggedUser && loggedUser.role === 'VISITOR'"><a routerLink='/registration'>Register</a></li>
@@ -12,19 +11,87 @@
 
 <p>user works!</p>
 
-<div>
-  <form #addForm="ngForm" (ngSubmit)="onAddUser(addForm)">
+<!-- Form to update logged user's information -->
+<div *ngIf="loggedUser && loggedUser.id > 0">
+  <h3>Update Your Information</h3>
+  <form #updateForm="ngForm" (ngSubmit)="onUpdateUser(loggedUser)">
     <div>
-      <input type="text" ngModel name="username"  id="username" placeholder="" required>
+      <label for="username">Username:</label>
+      <input type="text" [(ngModel)]="loggedUser.username" name="username" id="username" placeholder="Username" required>
     </div>
 
     <div>
-      <input type="text" ngModel name="password" id="password" placeholder="" required>
+      <label for="name">First Name:</label>
+      <input type="text" [(ngModel)]="loggedUser.name" name="name" id="name" placeholder="First Name">
     </div>
 
     <div>
-      <button [disabled]="addForm.invalid" type="submit" >Register</button>
+      <label for="surname">Last Name:</label>
+      <input type="text" [(ngModel)]="loggedUser.surname" name="surname" id="surname" placeholder="Last Name">
+    </div>
+
+    <div>
+      <label for="email">Email:</label>
+      <input type="email" [(ngModel)]="loggedUser.email" name="email" id="email" placeholder="Email" required>
+    </div>
+
+    <div>
+      <label for="phone">Phone:</label>
+      <input type="text" [(ngModel)]="loggedUser.phone" name="phone" id="phone" placeholder="Phone">
+    </div>
+
+    <div>
+      <button [disabled]="updateForm.invalid" type="submit">Update</button>
     </div>
   </form>
 </div>
 
+<!-- Password Change Form -->
+<div *ngIf="loggedUser && loggedUser.id > 0">
+  <h3>Change Password</h3>
+  <form #passwordForm="ngForm" (ngSubmit)="onChangePassword(passwordForm)">
+    <div>
+      <label for="currentPassword">Current Password:</label>
+      <input type="password" ngModel name="currentPassword" id="currentPassword" placeholder="Current Password" required>
+    </div>
+
+    <div>
+      <label for="newPassword">New Password:</label>
+      <input type="password" ngModel name="newPassword" id="newPassword" placeholder="New Password" required>
+    </div>
+
+    <div>
+      <label for="confirmPassword">Confirm New Password:</label>
+      <input type="password" ngModel name="confirmPassword" id="confirmPassword" placeholder="Confirm New Password" required>
+    </div>
+
+    <div>
+      <button [disabled]="passwordForm.invalid || passwordForm.value.newPassword !== passwordForm.value.confirmPassword" type="submit">
+        Change Password
+      </button>
+    </div>
+
+    <div *ngIf="passwordForm.value.newPassword !== passwordForm.value.confirmPassword && passwordForm.touched">
+      <p style="color: red;">New password and confirmation do not match!</p>
+    </div>
+  </form>
+</div>
+
+
+<!-- Registration form for new users -->
+<div *ngIf="!loggedUser || loggedUser.role === 'VISITOR'">
+  <h3>Register as a new user</h3>
+  <form #addForm="ngForm" (ngSubmit)="onAddUser(addForm)">
+    <div>
+      <input type="text" ngModel name="username" id="username2" placeholder="Username" required>
+    </div>
+
+    <div>
+      <input type="password" ngModel name="password" id="password" placeholder="Password" required>
+    </div>
+
+    <div>
+      <button [disabled]="addForm.invalid" type="submit">Register</button>
+    </div>
+  </form>
+</div>
