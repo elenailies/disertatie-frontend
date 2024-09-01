@@ -1,0 +1,160 @@
+<!-- menu -->
+<ul id="navbar">
+  <li id="menu_home"><a routerLink='/home'>Home</a></li>
+  <li *ngIf="loggedUser && loggedUser.role === 'ADMIN'"><a routerLink='/user'>Users</a></li>
+  <li><a routerLink='/contact'>Contact</a></li>
+  <li><a routerLink='/about'>About</a></li>
+  <li *ngIf="loggedUser && loggedUser.role === 'USER'"><a routerLink='/category'>Categories</a></li>
+  <li *ngIf="loggedUser && loggedUser.role === 'USER'"><a routerLink='/destination'>Destinations</a></li>
+  <li *ngIf="loggedUser && loggedUser.role === 'USER'"><a routerLink='/trip'>Trips</a></li>
+  <li *ngIf="loggedUser && loggedUser.role === 'VISITOR'"><a routerLink='/registration'>Register</a></li>
+  <li *ngIf="loggedUser && loggedUser.role === 'VISITOR'"><a routerLink='/login'>Login</a></li>
+  <li *ngIf="loggedUser && loggedUser.role === 'USER'"><a routerLink='/logout'>Logout</a></li>
+</ul>
+
+<p>Manage Users</p>
+
+<!-- Search Users -->
+<div class="search">
+  <form>
+    <input type="search" (ngModelChange)="searchUsers(key.value)" #key="ngModel" ngModel
+           name="key" id="searchName" class="form-control mr-sm-2" placeholder="Search users..." required>
+  </form>
+</div>
+
+<!-- Add User Button --><!--
+<div class="add_p">
+  <a class="button" (click)="onOpenModal(addUser, 'add')">Add User</a>
+</div>-->
+
+<!-- Display Users -->
+<div class="container" id="main-container" class="container_margin">
+  <div class="row">
+    <div *ngFor="let user of users">
+      <div class="card">
+        <div class="card-body">
+          <div class="card-title align-self-center">
+            <h5>Username: {{user.username}}</h5>
+            <p>Email: {{user.email}}</p>
+            <p>Role: {{user.menuRole}}</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="float-right btn-group btn-group-sm edit_delete_buttons">
+            <a (click)="onOpenModal(user, 'edit')" class="btn btn-primary tooltips" data-placement="top" data-original-title="Edit">
+              <i class="fa fa-pencil"></i>
+            </a>
+            <a (click)="onOpenModal(user, 'delete')" class="btn btn-secondary tooltips" data-placement="top" data-original-title="Delete">
+              <i class="fa fa-times"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notification for No Users -->
+  <div *ngIf="users.length === 0" class="col-lg-12 col-md-12 col-xl-12">
+    <div class="alert alert-info" role="alert">
+      <h4 class="alert-heading">No users found!</h4>
+      <p>No users were found in the system.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Add User Modal -->
+<div class="modal" id="addUserModal" role="dialog" [ngStyle]="{'display':display}">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h6 class="modal-title" id="addUserModalLabel">Add User</h6>
+        <button (click)="onCloseHandled()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form #addForm="ngForm" (ngSubmit)="onAddUser(addForm)">
+          <div class="form-group">
+            <input type="text" ngModel name="username" class="form-control form_input" placeholder="Username" required>
+          </div>
+          <div class="form-group">
+            <input type="email" ngModel name="email" class="form-control form_input" placeholder="Email" required>
+          </div>
+          <div class="form-group">
+            <input type="password" ngModel name="password" class="form-control form_input" placeholder="Password" required>
+          </div>
+
+          <div class="modal-footer">
+            <button (click)="onCloseHandled()" type="button" class="btn btn-secondary button">Close</button>
+            <button [disabled]="addForm.invalid" type="submit" class="btn btn-primary button">Save changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Edit User Modal -->
+<div class="modal" id="updateUserModal" role="dialog" [ngStyle]="{'display':display2}">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h6 class="modal-title" id="updateUserModalLabel">Edit User {{editUser.username}}</h6>
+        <button (click)="onCloseHandled2()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form #editForm="ngForm">
+          <div class="form-group">
+            <input type="text" ngModel="{{editUser.username}}" name="username" class="form-control form_input" placeholder="Username">
+          </div>
+          <div class="form-group">
+            <input type="email" ngModel="{{editUser.email}}" name="email" class="form-control form_input" placeholder="Email">
+          </div>
+          <div class="form-group">
+            <input type="password" ngModel="{{editUser.password}}" name="password" class="form-control form_input" placeholder="Password">
+          </div>
+          <div class="form-group">
+            <label for="menuRole">Role</label>
+            <select ngModel="{{editUser.menuRole}}" name="menuRole" class="form-control form_input" id="menuRole">
+              <option value="USER">User</option>
+              <option value="ORGANIZER">Organizer</option>
+              <option value="ADMIN">Admin</option>
+            </select>
+          </div>
+
+          <div class="modal-footer">
+            <button (click)="onCloseHandled2()" type="button" class="btn btn-secondary button">Close</button>
+            <button (click)="onUpdateUser(editForm.value)" type="submit" class="btn btn-primary button">Save changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Delete User Modal -->
+<div class="modal" id="deleteUserModal" role="dialog" [ngStyle]="{'display':display3}">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h6 class="modal-title" id="deleteUserModalLabel">Delete User</h6>
+        <button (click)="onCloseHandled3()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p class="modal_text">Are you sure you want to delete user {{deleteUser.username}}?</p>
+        <div class="modal-footer">
+          <button (click)="onCloseHandled3()" type="button" class="btn btn-secondary button">No</button>
+          <button (click)="onDeleteUser(deleteUser.id)" class="btn btn-danger button">Yes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>&copy; 2024 Touristic Transport Firm.</p>
+</footer>

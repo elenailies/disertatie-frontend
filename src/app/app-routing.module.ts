@@ -14,6 +14,7 @@ import { answerComponent } from './answer/answer.component';
 import { questionComponent } from './question/question.component';
 import { ReviewComponent } from './review/review.component';
 import { EmailFormComponent } from './email-form/email-form.component';
+import { AdminComponent } from './admin/admin.component';
 
 
 
@@ -32,7 +33,8 @@ const routes: Routes = [
 {path: 'answer', component: answerComponent},
 {path: 'question', component: questionComponent},
 {path: 'review', component: ReviewComponent},
-{path: 'email', component: EmailFormComponent}
+{path: 'email', component: EmailFormComponent},
+{path: 'admin', component: AdminComponent}
 ];
 
 @NgModule({

@@ -7,4 +7,5 @@ export class User {
   email: string = '';
   phone: string = '';
   role: string = 'VISITOR';
+  menuRole: string = 'USER';
 }

@@ -6,4 +6,5 @@ export class Trip {
   ticketPrice: number = 0;
   nrTickets: number = 0;
   date: string = '';
+  map: string = '';
 }

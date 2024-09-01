@@ -41,9 +41,8 @@
             <div class="card-title align-self-center">
               <h5>Category: {{destination.category.name}}</h5>
             </div>
-
-            <div>
-              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2848.8017574937053!2d26.060102176093476!3d44.43722857107573!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40b201dd97d58297%3A0x301135551489fb73!2s%22Dimitrie%20Br%C3%A2ndz%C4%83%22%20Botanical%20Garden!5e0!3m2!1sen!2sro!4v1716819685168!5m2!1sen!2sro" width="545" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <div *ngIf="destination.map">
+              <div [innerHtml]="destination.map | safeHtml"></div>
             </div>
 
           </div>
@@ -79,6 +78,10 @@
             <div class="form-group">
               <!--<label for="address">Address</label>-->
               <input type="text" ngModel name="address" class="form-control form_input" id="address" placeholder="Address" required>
+            </div>
+
+            <div class="form-group">
+              <input type="text" ngModel name="map" class="form-control form_input" id="map" placeholder="Map Embed URL" required>
             </div>
 
             <div>
@@ -118,6 +121,10 @@
              <div class="form-group">
               <!--<label for="address">Address</label>-->
               <input type="text" ngModel="{{editDestination.address}}" name="address" class="form-control form_input" id="address" placeholder="Address">
+            </div>
+
+            <div class="form-group">
+              <input type="text" ngModel="{{editDestination.map}}" name="map" class="form-control form_input" id="map" placeholder="Map Embed URL">
             </div>
 
             <div>
@@ -167,15 +174,7 @@
 </div>
 </div>
 
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
+<div style="height:100px"></div>
 
 <footer>
         <p>&copy; 2024 Touristic Transport Firm.</p>

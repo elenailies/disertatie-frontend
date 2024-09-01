@@ -22,10 +22,13 @@ import { ReviewComponent } from './review/review.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EmailFormComponent } from './email-form/email-form.component';
 //import { LoginComponent } from './login/login.component';
+import { SafeHtmlPipe } from './safe-url.pipe';
+import { AdminComponent } from './admin/admin.component';
 
 
 @NgModule({
   declarations: [
+    SafeHtmlPipe,
     AppComponent,
     HomeComponent,
     UserComponent,
@@ -41,7 +44,8 @@ import { EmailFormComponent } from './email-form/email-form.component';
     questionComponent,
     answerComponent,
     ReviewComponent,
-    EmailFormComponent
+    EmailFormComponent,
+    AdminComponent
 
   ],
   imports: [

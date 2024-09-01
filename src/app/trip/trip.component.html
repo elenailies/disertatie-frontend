@@ -39,6 +39,10 @@
           <p>Nr Tickets: {{trip.nrTickets}}</p>
           <p>Date: {{trip.date}}</p>
 
+          <div *ngIf="trip.map">
+            <div [innerHtml]="trip.map | safeHtml"></div>
+          </div>
+
           <div class = "add_p">
             <a class="button" (click)="onOpenModal3(trip, loggedUser, 'add')">Book Trip</a>
           </div>
@@ -100,6 +104,10 @@
               <input type="date" ngModel  name="date" class="form-control" placeholder="Date">
             </div>
 
+            <div class="form-group">
+              <input type="text" ngModel name="map" class="form-control form_input" id="map" placeholder="Map Embed URL" required>
+            </div>
+
             <div class="modal-footer">
               <button  (click)="onCloseHandled()" type="button" id="add-trip-form" class="btn btn-secondary button" data-dismiss="modal" >Close</button>
               <button [disabled]="addForm.invalid" type="submit" class="btn btn-primary button" >Save changes</button>
@@ -139,6 +147,9 @@
             </div>
             <div class="form-group">
               <input type="date" ngModel="{{editTrip.date}}" name="date" class="form-control" placeholder="Date">
+            </div>
+            <div class="form-group">
+              <input type="text" ngModel="{{editTrip.map}}" name="map" class="form-control form_input" id="map2" placeholder="Map Embed URL">
             </div>
             <input type="hidden" ngModel="{{editTrip.id}}" name="id" class="form-control" id="id" placeholder="Email">
 

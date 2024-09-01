@@ -5,6 +5,7 @@ export class Destination{
   name: string = '';
   address: string = '';
   category: Category = new Category();
+  map: string = '';
 }
 
 
