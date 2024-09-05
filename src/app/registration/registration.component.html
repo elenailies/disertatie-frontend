@@ -4,14 +4,22 @@
   <li *ngIf="loggedUser && loggedUser.role === 'ADMIN'"><a routerLink='/user'>Users</a></li>
   <!--<li id="logo">Touristic transportation<li>-->
   <li><a routerLink='/contact'>Contact</a></li>
-  <li><a routerLink='/about'>About</a></li>
   <li  *ngIf="loggedUser && loggedUser.role === 'USER'"><a routerLink='/category'>Categories</a></li>
   <li  *ngIf="loggedUser && loggedUser.role === 'USER'"><a routerLink='/destination'>Destinations</a></li>
   <li  *ngIf="loggedUser && loggedUser.role === 'USER'"><a routerLink='/trip'>Trips</a></li>
   <li  *ngIf="loggedUser && loggedUser.role === 'VISITOR'"><a routerLink='/registration'>Register</a></li>
   <li  *ngIf="loggedUser && loggedUser.role === 'VISITOR'"><a routerLink='/login'>Login</a></li>
   <li *ngIf="loggedUser && loggedUser.role === 'USER'"><a routerLink='/logout'>Logout</a></li>
+  <li *ngIf="loggedUser && loggedUser.role === 'USER'"><a routerLink='/bookings'>Book a trip</a></li>
+  <li *ngIf="loggedUser && loggedUser.role === 'USER'"><a routerLink='/question'>Help board</a></li>
+  <li *ngIf="loggedUser && loggedUser.role === 'VISITOR'"><a routerLink='/review'>Reviews</a></li>
+  <li *ngIf="loggedUser && loggedUser.role === 'USER'"><a routerLink='/review'>Reviews</a></li>
+  <li *ngIf="loggedUser && loggedUser.role === 'USER'"><a routerLink='/booking/user'>Your bookings</a></li>
+  <li *ngIf="loggedUser && loggedUser.role === 'USER'"><a routerLink='/user'>Edit your profile</a></li>
+  <li *ngIf="loggedUser && loggedUser.role === 'USER'"><a routerLink='/admin'>Admin</a></li>
+
 </ul>
+
 
 <p>Register works!</p>
 
