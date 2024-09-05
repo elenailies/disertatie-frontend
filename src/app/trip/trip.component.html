@@ -64,13 +64,15 @@
             </div>
           </div>
 
-          <div class = "add_p">
+          <div
+            *ngIf="loggedUser && (loggedUser.menuRole === 'ORGANIZATOR' || loggedUser.menuRole === 'ADMIN')"
+            class="add_p">
             <a class="button" (click)="onOpenModal2(trip, addProgram, 'add')">Add Destination and time interval</a>
           </div>
 
         </div>
         <div class="card-body">
-          <div class="float-right btn-group btn-group-sm edit_delete_buttons">
+          <div *ngIf="loggedUser && (loggedUser.menuRole === 'ORGANIZATOR' || loggedUser.menuRole === 'ADMIN')" class="float-right btn-group btn-group-sm edit_delete_buttons">
             <a (click)="onOpenModal(trip, 'edit')" class="btn btn-primary tooltips" data-placement="top" data-original-title="Edit" ><i class="fa fa-pencil"></i> </a>
             <a (click)="onOpenModal(trip, 'delete')" class="btn btn-secondary tooltips" data-placement="top" data-original-title="Delete"><i class="fa fa-times"></i></a>
           </div>
@@ -113,7 +115,7 @@
             </div>
 
             <div class="form-group">
-              <input type="text" ngModel name="map" class="form-control form_input" id="map" placeholder="Map Embed URL" required>
+              <input type="text" ngModel name="map" class="form-control form_input" id="map" placeholder="Map Embed URL">
             </div>
 
             <div class="modal-footer">
@@ -239,42 +241,41 @@
       <div class="modal-content">
         <div class="modal-header">
           <h6 class="modal-title" id="addBookingModalLabel">Book Trip</h6>
-          <button (click)="onCloseHandled5()" type="button" class="close" data-dismiss="modal" aria-label="Close" >
+          <button (click)="onCloseHandled5()" type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
           <form #addForm3="ngForm" (ngSubmit)="onAddBooking(addForm3)">
             <div>
-              <div>
+              <div style="display: none;">
                 <input [ngModel]="viewTrip" name="trip" class="form-control form_input" id="trip2" readonly>
               </div>
-              <div>
+              <div style="display: none;">
                 <input [ngModel]="loggedUser" name="user" class="form-control form_input" id="user" readonly>
               </div>
-              <div>
+              <div style="display: none;">
                 <input name="bookingDate" class="form-control form_input" id="bookingDate" readonly>
               </div>
-              <div>
+              <div style="display: none;">
                 <input name="totalCost" class="form-control form_input" id="totalCost" readonly>
               </div>
             </div>
             <div class="form-group">
-              <input type="number" ngModel  name="nrTickets" class="form-control" placeholder="Nr Tickets">
+              <label for="nrTickets">Number of Tickets</label>
+              <input type="number" ngModel name="nrTickets" id="nrTickets" class="form-control" placeholder="Nr Tickets">
             </div>
-            <!--<div class="form-group">
-              <input type="text" ngModel  name="totalCost" class="form-control form_input" placeholder="totalCost">
-            </div>-->
-
             <div class="modal-footer">
-              <button  (click)="onCloseHandled5()" type="button" id="add-booking-form" class="btn btn-secondary button" data-dismiss="modal" >Close</button>
-              <button [disabled]="addForm3.invalid" type="submit" class="btn btn-primary button" >Add</button>
+              <button (click)="onCloseHandled5()" type="button" id="add-booking-form" class="btn btn-secondary button" data-dismiss="modal">Close</button>
+              <button [disabled]="addForm3.invalid" type="submit" class="btn btn-primary button">Add</button>
             </div>
           </form>
         </div>
       </div>
     </div>
   </div>
+
+
 
 
 

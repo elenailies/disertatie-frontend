@@ -8,6 +8,7 @@ import { TokenService } from '../token.service';
 import { Token } from '../token';
 import { v4 as uuidv4 } from 'uuid';
 import * as CryptoJS from 'crypto-js'; // Import CryptoJS for hashing
+import { EmailService } from '../email.service';
 
 @Component({
   selector: 'app-login',
@@ -24,11 +25,15 @@ export class LoginComponent implements OnInit {
   public tokens: Token[] = [];
   public tokensUser: Token[] = [];
 
+  emailDetails = { to: 'elenailies09gmail.com', subject: 'Test resetare parola', text: 'Test Test' };
+    message: string | null = null;
+
   constructor(
     private userService: UserService,
     private tokenService: TokenService,
     private router: Router,
-    private localStorage: LocalStorage
+    private localStorage: LocalStorage,
+    private emailService: EmailService
   ) {
     this.getLoggedUser();
   }
@@ -140,4 +145,37 @@ export class LoginComponent implements OnInit {
   getTokensForUser(userId: number) {
     return this.tokens.filter(token => token.user.id === userId);
   }
+
+   /*sendEmail() {
+      this.emailService.sendEmail(this.emailDetails).subscribe(
+        (response: any) => {
+          this.message = response.message;  // Access the message property from the JSON response
+        },
+        (error: HttpErrorResponse) => {
+          console.error('Error occurred:', error);
+          this.message = 'Error sending email. Please check console for details.';
+        }
+      );
+    }*/
+
+  sendEmail() {
+    this.emailDetails = {
+      to: 'elenailies09@gmail.com',
+      subject: 'Test resetare parola',
+      text: 'Test Test'
+    };
+
+    this.emailService.sendEmail(this.emailDetails).subscribe(
+      (response: any) => {
+        this.message = response.message;
+        console.log('Email sent successfully:', response);
+      },
+      (error: HttpErrorResponse) => {
+        console.error('Error occurred:', error);
+        this.message = 'Error sending email. Please check console for details.';
+      }
+    );
+  }
+
+
 }

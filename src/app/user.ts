@@ -8,4 +8,5 @@ export class User {
   phone: string = '';
   role: string = 'VISITOR';
   menuRole: string = 'USER';
+  enabled: boolean = true;
 }
