@@ -33,8 +33,36 @@
   <button type="submit">Login</button>
 </form>
 
-<button type="button" (click)="sendEmail()">Forgot password</button>
 
+<div class = "add_p">
+  <a class="button" (click)="onOpenModal('add')">Account Recovery</a>
+</div>
+
+<!-- Add Category Modal -->
+<div class="modal" id="addCategoryModal" role="dialog" [ngStyle]="{'display':display}">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h6 class="modal-title" id="addCategoryModalLabel">Introduce email for account recovery</h6>
+        <button (click)="onCloseHandled()" type="button" class="close" data-dismiss="modal" aria-label="Close" >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form #addForm="ngForm">
+          <div class="form-group">
+            <input type="email" name="email" [(ngModel)]="user.email" class="form-control" placeholder="Enter your email" required>
+          </div>
+          <div class="modal-footer">
+            <button  (click)="onCloseHandled()" type="button" id="add-category-form" class="btn btn-secondary button" data-dismiss="modal" >Close</button>
+          </div>
+          <button type="button" (click)="sendEmail()">Forgot password</button>
+          <p *ngIf="message" class="alert alert-success">{{ message }}</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 
  <footer>
         <p>&copy; 2024 Touristic Transport Firm.</p>

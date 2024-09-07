@@ -90,31 +90,25 @@ export class UserComponent implements OnInit {
     const newPassword = passwordForm.value.newPassword;
     const confirmPassword = passwordForm.value.confirmPassword;
 
-    // Hash the current password for comparison
     const hashedCurrentPassword = CryptoJS.SHA256(currentPassword).toString(CryptoJS.enc.Hex);
 
     console.log('Hashed current password:', hashedCurrentPassword);
     console.log('Stored hashed password:', CryptoJS.SHA256(this.loggedUser.password).toString(CryptoJS.enc.Hex));
 
-    // Check if the current password matches
     if (hashedCurrentPassword !== this.loggedUser.password) {
       alert('Current password is incorrect.');
       return;
     }
 
-    // Check if new password and confirmation match
     if (newPassword !== confirmPassword) {
       alert('New password and confirmation do not match!');
       return;
     }
 
-    // Hash the new password
     this.loggedUser.password = CryptoJS.SHA256(newPassword).toString(CryptoJS.enc.Hex);
 
-    // Update the loggedUser's password
     this.userService.updateUser(this.loggedUser).subscribe(
       (response: User) => {
-        // Update user in localStorage after successful API call
         this.localStorage.setItem('LoggedUser', response).subscribe(() => {
           alert('Password changed successfully');
           passwordForm.reset();

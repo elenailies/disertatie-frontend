@@ -9,6 +9,7 @@ import { Token } from '../token';
 import { v4 as uuidv4 } from 'uuid';
 import * as CryptoJS from 'crypto-js'; // Import CryptoJS for hashing
 import { EmailService } from '../email.service';
+import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -24,6 +25,7 @@ export class LoginComponent implements OnInit {
   public currentUser: User = new User();
   public tokens: Token[] = [];
   public tokensUser: Token[] = [];
+   public display: String = "none";
 
   emailDetails = { to: 'elenailies09gmail.com', subject: 'Test resetare parola', text: 'Test Test' };
     message: string | null = null;
@@ -158,11 +160,22 @@ export class LoginComponent implements OnInit {
       );
     }*/
 
-  sendEmail() {
+   generateRandomString(length: number): string {
+            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            let result = '';
+            for (let i = 0; i < length; i++) {
+                result += characters.charAt(Math.floor(Math.random() * characters.length));
+            }
+            return result;
+        }
+
+  /*sendEmail() {
+    const password: string = this.generateRandomString(8);
+    console.log(password);
     this.emailDetails = {
       to: 'elenailies09@gmail.com',
       subject: 'Test resetare parola',
-      text: 'Test Test'
+      text: password
     };
 
     this.emailService.sendEmail(this.emailDetails).subscribe(
@@ -175,7 +188,68 @@ export class LoginComponent implements OnInit {
         this.message = 'Error sending email. Please check console for details.';
       }
     );
+  }*/
+
+  sendEmail() {
+    // Step 1: Check if the email exists in the database
+    const matchingUser = this.existingUsers.find(user => user.email === this.user.email);
+
+    if (matchingUser) {
+      // Step 2: Generate a random password
+      const password: string = this.generateRandomString(8);
+      console.log(password);
+      console.log(matchingUser);
+
+      // Step 3: Prepare email details
+      this.emailDetails = {
+        to: 'elenailies09@gmail.com', // Use the matching user's email
+        subject: 'Password Reset',
+        text: `Your new password is: ${password}` // You might want to store this password securely in your database
+      };
+
+      // Step 4: Send the email
+      this.emailService.sendEmail(this.emailDetails).subscribe(
+            (response: any) => {
+              this.message = response.message;
+              console.log('Email sent successfully:', response);
+            },
+            (error: HttpErrorResponse) => {
+              console.error('Error occurred:', error);
+              this.message = 'Error sending email. Please check console for details.';
+            }
+      );
+
+      // Optionally, update the user's password in the database with the newly generated one (hashed)
+      const hashedPassword = this.hashPassword(password);
+      matchingUser.password = hashedPassword;
+      this.userService.updateUser(matchingUser).subscribe(
+        () => {
+          console.log('Password updated successfully');
+        },
+        (error: HttpErrorResponse) => {
+          console.error('Error updating password:', error);
+        }
+      );
+    } else {
+      // Email does not exist, show an error message
+      this.message = 'This email address is not registered.';
+      console.error('Email does not exist in the database.');
+    }
   }
+
+
+
+
+  public onOpenModal( mode: string): void {
+      if (mode === 'add') {
+        this.display = "block";
+      }
+  }
+
+  onCloseHandled() {
+        this.display = "none";
+
+      }
 
 
 }
