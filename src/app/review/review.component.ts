@@ -96,6 +96,9 @@ getTotalRating(): number {
 
 
   public onUpdateReview(review: Review): void {
+    console.log(review);
+    review.user = this.loggedUser;
+    console.log(review);
     this.reviewService.updateReview(review).subscribe(
       (response: Review) => {
         console.log(response);
@@ -144,7 +147,9 @@ getTotalRating(): number {
     }
     if (mode === 'edit') {
       this.editReview = review;
+      console.log(this.editReview);
       this.display2 = "block";
+
     }
     if (mode === 'delete') {
       this.deleteReview = review;
