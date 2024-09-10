@@ -274,7 +274,7 @@
           <form #addForm="ngForm" (ngSubmit)="onAddQuestion(addForm)">
             <div>
               <div>
-                <input [ngModel]="loggedUser" name="user" class="form-control form_input" id="user" readonly>
+                <input type="hidden" [ngModel]="loggedUser" name="user" class="form-control form_input" id="user" readonly>
               </div>
 
             </div>
@@ -308,16 +308,16 @@
         <div class="modal-body">
           <form #editForm="ngForm">
             <div>
-              <input ngModel="{{editQuestion.user}}" name="user" class="form-control form_input" id="user2" readonly>
+              <input type="hidden" ngModel="{{editQuestion.user}}" name="user" class="form-control form_input" id="user2" readonly>
             </div>
             <div class="form-group">
-              <input type="text" ngModel="{{editQuestion.title}}" name="title" class="form-control" placeholder="title">
+              <input type="text" ngModel="{{editQuestion.title}}" name="title" class="form-control form_input" placeholder="title">
             </div>
             <div class="form-group">
-              <input type="text" ngModel="{{editQuestion.description}}" name="description" class="description" placeholder="description">
+              <input type="text" ngModel="{{editQuestion.description}}" name="description" class="form-control form_input" placeholder="description">
             </div>
 
-            <input type="hidden" ngModel="{{editQuestion.id}}" name="id" class="form-control" id="id" placeholder="Email">
+            <input type="hidden" ngModel="{{editQuestion.id}}" name="id" class="form-control form_input" id="id" placeholder="Email">
 
             <div class="modal-footer">
               <button (click)="onCloseHandled2()" type="button" id="" data-dismiss="modal" class="btn btn-secondary button">Close</button>
@@ -397,10 +397,10 @@
           <form #addForm2="ngForm" (ngSubmit)="onAddAnswer(addForm2)">
             <div>
               <div>
-                <input [ngModel]="loggedUser" name="user" class="form-control form_input" id="user3" readonly>
+                <input type="hidden" [ngModel]="loggedUser" name="user" class="form-control form_input" id="user3" readonly>
               </div>
               <div>
-                <input [ngModel]="ansQuestion" name="question" class="form-control form_input" id="question" readonly>
+                <input type="hidden" [ngModel]="ansQuestion" name="question" class="form-control form_input" id="question" readonly>
               </div>
 
             </div>

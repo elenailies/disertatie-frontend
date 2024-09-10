@@ -283,7 +283,7 @@
           <form #addForm="ngForm" (ngSubmit)="onAddReview(addForm)">
             <div>
               <div>
-                <input [ngModel]="loggedUser" name="user" class="form-control form_input" id="user" readonly>
+                <input type="hidden" [ngModel]="loggedUser" name="user" class="form-control form_input" id="user" readonly>
               </div>
 
             </div>
@@ -317,10 +317,10 @@
         <div class="modal-body">
           <form #editForm="ngForm">
             <div>
-              <input ngModel="{{editReview.user}}" name="user" class="form-control form_input" id="user2" readonly>
+              <input type="hidden" ngModel="{{editReview.user}}" name="user" class="form-control form_input" id="user2" readonly>
             </div>
             <div class="form-group">
-              <input type="number" ngModel="{{editReview.rating}}" name="rating" class="form-control" placeholder="rating">
+              <input type="number" ngModel="{{editReview.rating}}" name="rating" class="form-control form_input" placeholder="rating">
             </div>
             <div class="form-group">
               <input type="text" ngModel="{{editReview.content}}" name="content" class="form-control form_input" placeholder="content">
