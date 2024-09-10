@@ -195,6 +195,15 @@
             margin-bottom: 20px;
         }
     }
+    .rating {
+    font-size: 24px;
+    color: dark-gray;
+    font-weight: bold;
+    text-align: center;
+    margin: 20px 0;
+    padding: 10px 20px;
+    border-radius: 8px;
+}
   </style>
 </head>
 <body>
@@ -231,7 +240,7 @@
   </form>
 </div>
 
-<p>Average Rating: {{totalRating}}</p>
+<p class="rating">Average Rating: {{totalRating | number:'1.2-2'}}/5</p>
 
 <div class = "add_p">
   <a class="button" (click)="onOpenModal(addReview, 'add')">Add Review</a>

@@ -266,14 +266,13 @@
           </div>
 
           <div
-            *ngIf="loggedUser && (loggedUser.menuRole === 'ORGANIZATOR' || loggedUser.menuRole === 'ADMIN')"
             class="add_p">
             <a class="button" (click)="onOpenModal2(trip, addProgram, 'add')">Add Destination and time interval</a>
           </div>
 
         </div>
         <div class="card-body">
-          <div *ngIf="loggedUser && (loggedUser.menuRole === 'ORGANIZATOR' || loggedUser.menuRole === 'ADMIN')" class="float-right btn-group btn-group-sm edit_delete_buttons">
+          <div class="float-right btn-group btn-group-sm edit_delete_buttons">
             <a (click)="onOpenModal(trip, 'edit')" class="btn btn-primary tooltips" data-placement="top" data-original-title="Edit" ><i class="fa fa-pencil"></i> </a>
             <a (click)="onOpenModal(trip, 'delete')" class="btn btn-secondary tooltips" data-placement="top" data-original-title="Delete"><i class="fa fa-times"></i></a>
           </div>

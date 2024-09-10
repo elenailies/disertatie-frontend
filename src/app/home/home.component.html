@@ -206,9 +206,6 @@
 
 <nav>
   <a routerLink='/home'>Home</a>
-  <!--<a *ngIf="loggedUser && loggedUser.role === 'ADMIN'" routerLink='/user'>Users</a>-->
-  <!--<a routerLink='/contact'>Contact</a>-->
-  <!-- Trips and Destinations Dropdown Menu -->
   <div *ngIf="loggedUser && loggedUser.role === 'USER'" class="dropdown">
     <a class="dropdown-button">Trips and Destinations</a>
     <div class="dropdown-content">
@@ -219,13 +216,9 @@
   </div>
   <a *ngIf="loggedUser && loggedUser.role === 'VISITOR'" routerLink='/registration'>Register</a>
   <a *ngIf="loggedUser && loggedUser.role === 'VISITOR'" routerLink='/login'>Login</a>
-  <!--<a *ngIf="loggedUser && loggedUser.role === 'USER'" routerLink='/bookings'>Book a trip</a>-->
   <a *ngIf="loggedUser && loggedUser.role === 'USER' && loggedUser.role === 'USER'" routerLink='/question'>Help board</a>
-  <a *ngIf="loggedUser && loggedUser.role === 'VISITOR'" routerLink='/review'>Reviews</a>
-  <!--<a *ngIf="loggedUser && loggedUser.role === 'USER'" routerLink='/review'>Reviews</a>-->
-  <a routerLink='/admin'>Admin</a>
-  <!--*ngIf="loggedUser && loggedUser.role === 'USER' && loggedUser.menuRole === 'ADMIN'"-->
-  <!-- Profile Dropdown Menu -->
+  <a routerLink='/review'>Reviews</a>
+  <a *ngIf="loggedUser && loggedUser.role === 'USER' && loggedUser.role === 'USER'" routerLink='/admin'>Admin</a>
   <div *ngIf="loggedUser && loggedUser.role === 'USER' && loggedUser.role === 'USER'" class="dropdown">
     <a class="dropdown-button">Your Profile</a>
     <div class="dropdown-content">
