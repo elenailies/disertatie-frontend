@@ -94,7 +94,7 @@ export class TripComponent implements OnInit{
   public getTrips(): void {
     this.tripService.getTrips().subscribe(
       (response: Trip[]) => {
-        this.trips = response;
+        this.trips = response.filter(trip => trip.enabled);
         console.log(this.trips);
       },
       (error: HttpErrorResponse) => {
@@ -137,6 +137,20 @@ export class TripComponent implements OnInit{
       }
     );
   }
+
+public onDisableTrip(trip: Trip): void {
+  trip.enabled = false;
+  this.tripService.updateTrip(trip).subscribe(
+    (response: Trip) => {
+      console.log('Trip disabled:', response);
+      this.getTrips();
+      this.onCloseHandled3();
+    },
+    (error: HttpErrorResponse) => {
+      alert(error.message);
+    }
+  );
+}
 
   public onDeleteTrip(tripId: number): void {
     this.tripService.deleteTrip(tripId).subscribe(

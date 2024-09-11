@@ -70,7 +70,7 @@ export class questionComponent implements OnInit{
   public getQuestions(): void {
     this.questionService.getQuestions().subscribe(
       (response: Question[]) => {
-        this.questions = response;
+        this.questions = response.filter(question => question.enabled);
         console.log(this.questions);
       },
       (error: HttpErrorResponse) => {
@@ -115,6 +115,20 @@ export class questionComponent implements OnInit{
       }
     );
   }
+
+public onDisableQuestion(question: Question): void {
+  question.enabled = false;
+  this.questionService.updateQuestion(question).subscribe(
+    (response: Question) => {
+      console.log('Question disabled:', response);
+      this.getQuestions();
+      this.onCloseHandled3();
+    },
+    (error: HttpErrorResponse) => {
+      alert(error.message);
+    }
+  );
+}
 
   public onDeleteQuestion(questionId: number): void {
     this.questionService.deleteQuestion(questionId).subscribe(
@@ -258,12 +272,12 @@ public onOpenModal3(answer: Answer, mode: string): void {
        (response: Answer) => {
          console.log(response);
          this.getAnswers();
-         addForm2.reset();
+         //addForm2.reset();
          this.onCloseHandled();
        },
        (error: HttpErrorResponse) => {
          alert(error.message);
-         addForm2.reset();
+         //addForm2.reset();
        }
      );
    }
