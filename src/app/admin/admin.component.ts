@@ -69,13 +69,14 @@ export class AdminComponent implements OnInit {
   }
 
   public onUpdateUser(user: User): void {
+     console.log('first:',user);
     if (user.password) {
       user.password = CryptoJS.SHA256(user.password).toString(CryptoJS.enc.Hex);
     }
 
     this.userService.updateUser(user).subscribe(
       (response: User) => {
-        console.log(response);
+        console.log('second:',response);
         this.getUsers();
         this.onCloseHandled2();
       },
