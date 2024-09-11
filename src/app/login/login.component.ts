@@ -219,7 +219,6 @@ export class LoginComponent implements OnInit {
             }
       );
 
-      // Optionally, update the user's password in the database with the newly generated one (hashed)
       const hashedPassword = this.hashPassword(password);
       matchingUser.password = hashedPassword;
       this.userService.updateUser(matchingUser).subscribe(

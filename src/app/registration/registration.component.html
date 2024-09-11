@@ -310,6 +310,8 @@
   <label for="password">Password:</label>
   <input type="password" id="password" name="password" [(ngModel)]="user.password" required>
 
+  <p>{{errorMessage}}</p>
+
   <button type="submit">Register</button>
 </form>
 
