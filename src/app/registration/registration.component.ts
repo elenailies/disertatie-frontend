@@ -52,7 +52,8 @@ export class RegistrationComponent implements OnInit{
 
   onRegister() {
     const matchingUser = this.existingUsers.find(user => user.email === this.user.email);
-    if(!matchingUser){
+    const matchingUser2 = this.existingUsers.find(user => user.username === this.user.username);
+    if(!matchingUser && !matchingUser2){
       this.user.password = this.hashPassword(this.user.password);
 
           this.userService.addUser(this.user).subscribe(
@@ -71,7 +72,8 @@ export class RegistrationComponent implements OnInit{
             }
           );
       }
-    else this.errorMessage = 'The email address is already registered. Please use a different email.';
+    else if(matchingUser)this.errorMessage = 'The email address is already registered. Please use a different email.';
+    else if(matchingUser2)this.errorMessage = 'The username is already registered. Please use a different username.';
 
   }
 }

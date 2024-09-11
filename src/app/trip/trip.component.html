@@ -215,13 +215,13 @@
   <a *ngIf="loggedUser && loggedUser.role === 'VISITOR'" routerLink='/registration'>Register</a>
   <a *ngIf="loggedUser && loggedUser.role === 'VISITOR'" routerLink='/login'>Login</a>
   <a *ngIf="loggedUser && loggedUser.role === 'USER' && loggedUser.role === 'USER'" routerLink='/question'>Help board</a>
-  <a *ngIf="loggedUser && loggedUser.role === 'VISITOR'" routerLink='/review'>Reviews</a>
-  <a routerLink='/admin'>Admin</a>
+  <a routerLink='/review'>Reviews</a>
+  <a *ngIf="loggedUser && loggedUser.role === 'USER' && loggedUser.role === 'USER' && loggedUser.menuRole === 'ADMIN'" routerLink='/admin'>Admin</a>
   <div *ngIf="loggedUser && loggedUser.role === 'USER' && loggedUser.role === 'USER'" class="dropdown">
     <a class="dropdown-button">Your Profile</a>
     <div class="dropdown-content">
       <a routerLink='/logout'>Logout</a>
-      <a routerLink='/booking/user'>Your Bookings</a>
+      <a routerLink='/bookings/user'>Your Bookings</a>
       <a routerLink='/user'>Edit Your Profile</a>
     </div>
   </div>
@@ -233,7 +233,7 @@
            name="key" id="searchName" class="form-control mr-sm-2" placeholder="Search trips..." required>
   </form>
 </div>
-<div class = "add_p">
+<div *ngIf="loggedUser.menuRole === 'ORGANIZATOR' || loggedUser.menuRole === 'ADMIN'" class = "add_p">
   <a class="button" (click)="onOpenModal(addTrip, 'add')">Add Trip</a>
 </div>
 
@@ -265,7 +265,7 @@
               <div class="card-body">
                 <p>Destinatie: {{program.destination.name}}: {{program.destination.category.name}}; {{program.startTime}} - {{program.endTime}}</p>
               </div>
-              <div class="card-body">
+              <div  *ngIf="loggedUser.menuRole === 'ORGANIZATOR' || loggedUser.menuRole === 'ADMIN'" class="card-body">
                 <div class="float-right btn-group btn-group-sm edit_delete_buttons">
                   <a (click)="onOpenModal4(program, 'edit')" class="btn btn-primary tooltips" data-placement="top" data-original-title="Edit" ><i class="fa fa-pencil"></i> </a>
                   <a (click)="onOpenModal4(program, 'delete')" class="btn btn-secondary tooltips" data-placement="top" data-original-title="Delete"><i class="fa fa-times"></i></a>
@@ -274,17 +274,17 @@
             </div>
           </div>
 
-          <div
+          <div  *ngIf="loggedUser.menuRole === 'ORGANIZATOR' || loggedUser.menuRole === 'ADMIN'"
             class="add_p">
             <a class="button" (click)="onOpenModal2(trip, addProgram, 'add')">Add Destination and time interval</a>
           </div>
 
-          <div class = "add_p">
+          <div *ngIf="loggedUser.menuRole === 'ORGANIZATOR' || loggedUser.menuRole === 'ADMIN'" class = "add_p">
             <a class="button" (click)="onOpenModal(trip, 'bookings')">View Bookings</a>
           </div>
 
         </div>
-        <div class="card-body">
+        <div  *ngIf="loggedUser.menuRole === 'ORGANIZATOR' || loggedUser.menuRole === 'ADMIN'" class="card-body">
           <div class="float-right btn-group btn-group-sm edit_delete_buttons">
             <a (click)="onOpenModal(trip, 'edit')" class="btn btn-primary tooltips" data-placement="top" data-original-title="Edit" ><i class="fa fa-pencil"></i> </a>
             <a (click)="onOpenModal(trip, 'delete')" class="btn btn-secondary tooltips" data-placement="top" data-original-title="Delete"><i class="fa fa-times"></i></a>

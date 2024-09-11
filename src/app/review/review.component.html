@@ -221,13 +221,13 @@
   <a *ngIf="loggedUser && loggedUser.role === 'VISITOR'" routerLink='/registration'>Register</a>
   <a *ngIf="loggedUser && loggedUser.role === 'VISITOR'" routerLink='/login'>Login</a>
   <a *ngIf="loggedUser && loggedUser.role === 'USER' && loggedUser.role === 'USER'" routerLink='/question'>Help board</a>
-  <a *ngIf="loggedUser && loggedUser.role === 'VISITOR'" routerLink='/review'>Reviews</a>
-  <a routerLink='/admin'>Admin</a>
+  <a routerLink='/review'>Reviews</a>
+  <a *ngIf="loggedUser && loggedUser.role === 'USER' && loggedUser.role === 'USER' && loggedUser.menuRole === 'ADMIN'" routerLink='/admin'>Admin</a>
   <div *ngIf="loggedUser && loggedUser.role === 'USER' && loggedUser.role === 'USER'" class="dropdown">
     <a class="dropdown-button">Your Profile</a>
     <div class="dropdown-content">
       <a routerLink='/logout'>Logout</a>
-      <a routerLink='/booking/user'>Your Bookings</a>
+      <a routerLink='/bookings/user'>Your Bookings</a>
       <a routerLink='/user'>Edit Your Profile</a>
     </div>
   </div>
@@ -242,7 +242,7 @@
 
 <p class="rating">Average Rating: {{totalRating | number:'1.2-2'}}/5</p>
 
-<div class = "add_p">
+<div *ngIf="loggedUser && loggedUser.role === 'USER'" class = "add_p">
   <a class="button" (click)="onOpenModal(addReview, 'add')">Add Review</a>
 </div>
 
@@ -257,7 +257,7 @@
           <p>Content: {{review.content}}</p>
 
         </div>
-        <div class="card-body">
+        <div *ngIf="loggedUser && loggedUser.role === 'USER' && (loggedUser.menuRole === 'ADMIN' || loggedUser.id === review.user.id)" class="card-body">
           <div class="float-right btn-group btn-group-sm edit_delete_buttons">
             <a (click)="onOpenModal(review, 'edit')" class="btn btn-primary tooltips" data-placement="top" data-original-title="Edit" ><i class="fa fa-pencil"></i> </a>
             <a (click)="onOpenModal(review, 'delete')" class="btn btn-secondary tooltips" data-placement="top" data-original-title="Delete"><i class="fa fa-times"></i></a>

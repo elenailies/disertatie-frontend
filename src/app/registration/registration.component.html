@@ -288,13 +288,13 @@
   <a *ngIf="loggedUser && loggedUser.role === 'VISITOR'" routerLink='/registration'>Register</a>
   <a *ngIf="loggedUser && loggedUser.role === 'VISITOR'" routerLink='/login'>Login</a>
   <a *ngIf="loggedUser && loggedUser.role === 'USER' && loggedUser.role === 'USER'" routerLink='/question'>Help board</a>
-  <a *ngIf="loggedUser && loggedUser.role === 'VISITOR'" routerLink='/review'>Reviews</a>
-  <a routerLink='/admin'>Admin</a>
+  <a routerLink='/review'>Reviews</a>
+  <a *ngIf="loggedUser && loggedUser.role === 'USER' && loggedUser.role === 'USER' && loggedUser.menuRole === 'ADMIN'" routerLink='/admin'>Admin</a>
   <div *ngIf="loggedUser && loggedUser.role === 'USER' && loggedUser.role === 'USER'" class="dropdown">
     <a class="dropdown-button">Your Profile</a>
     <div class="dropdown-content">
       <a routerLink='/logout'>Logout</a>
-      <a routerLink='/booking/user'>Your Bookings</a>
+      <a routerLink='/bookings/user'>Your Bookings</a>
       <a routerLink='/user'>Edit Your Profile</a>
     </div>
   </div>
