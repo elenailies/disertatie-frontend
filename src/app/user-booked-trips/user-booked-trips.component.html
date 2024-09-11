@@ -1,4 +1,3 @@
-<!--
 <ul id="navbar">
   <li><a routerLink='/home'>Home</a></li>
   <li><a routerLink='/contact'>Contact</a></li>
@@ -10,38 +9,56 @@
 <p>User Booked Trips works!</p>
 
 <div class="container">
-  <div *ngFor="let booking of userTripDetails" class="card">
-    <div class="card-body">
-      <h5 class="card-title">{{booking.trip.name}}</h5>
-      <p>Start Time: {{booking.trip.startTime}}</p>
-      <p>End Time: {{booking.trip.endTime}}</p>
-      <p>Ticket Price: ${{booking.trip.ticketPrice}}</p>
-      <p>Booking Date: {{booking.bookingDate}}</p>
+  <!-- Displaying each booking card -->
+  <div *ngFor="let booking of bookings">
+    <div class="card">
+      <div class="card-body">
+        <div class="card-title align-self-center">
+          <h5 class="card-title">{{ booking.trip.name }}</h5>
+          <p><strong>Start Time:</strong> {{ booking.trip.startTime }}</p>
+          <p><strong>End Time:</strong> {{ booking.trip.endTime }}</p>
+          <p><strong>Number of Tickets:</strong> {{ booking.nrTickets }}</p>
+          <p><strong>Ticket Price:</strong> ${{ booking.trip.ticketPrice }}</p>
+          <p><strong>Booking Date:</strong> {{ booking.bookingDate }}</p>
+        </div>
+      </div>
+
+      <div class="card-body">
+        <div class="float-right btn-group btn-group-sm edit_delete_buttons">
+          <a (click)="onOpenModal(booking, 'delete')" class="btn btn-secondary tooltips" data-placement="top" data-original-title="Delete">
+            <i class="fa fa-times">Cancel trip</i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+  <!-- Delete Booking Modal -->
+  <div class="modal" id="deleteBookingModal" role="dialog" [ngStyle]="{'display':displayBookingDelete}">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h6 class="modal-title" id="deleteModelLabel">Delete Booking</h6>
+          <button (click)="onCloseHandledBookingDelete()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p class="modal_text">Are you sure you want to cancel booking?</p>
+          <div class="modal-footer">
+            <button (click)="onCloseHandledBookingDelete()" type="button" class="btn btn-secondary button" data-dismiss="modal">No</button>
+            <button (click)="onDeleteBooking(deleteBooking.id)" class="btn btn-danger button" data-dismiss="modal">Yes</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
-  <div *ngIf="userTripDetails.length == 0">
-    <div class="alert alert-info" role="alert">
-      <h4 class="alert-heading">No booked trips!</h4>
-      <p>You haven't booked any trips yet.</p>
-    </div>
+
+</div>
+
+  <!-- If no bookings are found, show this alert -->
+  <div *ngIf="bookings.length === 0" class="alert alert-info" role="alert">
+    <h4 class="alert-heading">No booked trips!</h4>
+    <p>You haven't booked any trips yet.</p>
   </div>
 </div>
-
-<div *ngIf="userTripDetails.length > 0">
-  <h2>User Trips</h2>
-  <ul>
-    <li *ngFor="let userTripDetail of userTripDetails">
-      User: {{userTripDetail.user.username}}
-      <br/>
-      Trip: {{userTripDetail.trip.name}}
-      <br/>
-      Booking date: {{userTripDetail.bookingDate}}
-      <br/>
-    </li>
-  </ul>
-</div>
-
-<div *ngIf="userTripDetails.length === 0">
-  <p>No trips found for this user.</p>
-</div>-->

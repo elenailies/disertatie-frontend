@@ -10,6 +10,10 @@ export class TripService {
 
   constructor(private http: HttpClient){}
 
+  public getTripById(tripId: number): Observable<Trip> {
+    return this.http.get<Trip>(`${this.apiServerUrl}/trip/${tripId}`);
+  }
+
   public getTrips(): Observable<Trip[]> {
     return this.http.get<Trip[]>(`${this.apiServerUrl}/trip/all`);
   }

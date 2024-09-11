@@ -22,7 +22,7 @@ export class userTripBookingComponent implements OnInit {
   //public loggedUser: User = new User();
   public userIdToFind: number = 0;
 
-  constructor(private tripService: TripService, private userTripDetailsService: UserTripDetailsService, private localStorage: LocalStorage) {
+  constructor(private tripService: TripService, private bookingService: BookingService, private localStorage: LocalStorage) {
     // Simulating logged in user
     //this.loggedUser.id = 1; // Replace with actual user data from authentication
      this.getLoggedUser();
@@ -37,8 +37,8 @@ export class userTripBookingComponent implements OnInit {
           this.userIdToFind = this.loggedUser.id;
         });
 
-    }
-*/
+    }*/
+
 
   ngOnInit(): void {
     //this.loadAvailableTrips();
@@ -53,20 +53,7 @@ export class userTripBookingComponent implements OnInit {
         console.error('Error fetching trips:', error);
       }
     );
-  }
-
-  bookTrip(tripId: number): void {
-    const bookingDate = new Date().toISOString().split('T')[0]; // Booking date as today's date
-    this.userTripDetailsService.bookTrip(this.userIdToFind, tripId, bookingDate).subscribe(
-      (response) => {
-        console.log('Trip booked successfully:', response);
-        alert('Trip booked successfully!');
-      },
-      (error) => {
-        console.error('Error booking trip:', error);
-        alert('Failed to book the trip!');
-      }
-    );
   }*/
+
 }
 

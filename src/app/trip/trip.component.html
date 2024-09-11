@@ -244,7 +244,7 @@
       <div class="card">
         <div class="card-body">
 
-          <h5 class="card-title">Name: {{trip.name}}</h5>
+          <h5 class="card-title">Username: {{trip.name}}</h5>
           <p>Start Time: {{trip.startTime}}</p>
           <p>End Time: {{trip.endTime}}</p>
           <p>Ticket Price: ${{trip.ticketPrice}}</p>
@@ -265,6 +265,12 @@
               <div class="card-body">
                 <p>Destinatie: {{program.destination.name}}: {{program.destination.category.name}}; {{program.startTime}} - {{program.endTime}}</p>
               </div>
+              <div class="card-body">
+                <div class="float-right btn-group btn-group-sm edit_delete_buttons">
+                  <a (click)="onOpenModal4(program, 'edit')" class="btn btn-primary tooltips" data-placement="top" data-original-title="Edit" ><i class="fa fa-pencil"></i> </a>
+                  <a (click)="onOpenModal4(program, 'delete')" class="btn btn-secondary tooltips" data-placement="top" data-original-title="Delete"><i class="fa fa-times"></i></a>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -273,12 +279,40 @@
             <a class="button" (click)="onOpenModal2(trip, addProgram, 'add')">Add Destination and time interval</a>
           </div>
 
+          <div class = "add_p">
+            <a class="button" (click)="onOpenModal(trip, 'bookings')">View Bookings</a>
+          </div>
+
         </div>
         <div class="card-body">
           <div class="float-right btn-group btn-group-sm edit_delete_buttons">
             <a (click)="onOpenModal(trip, 'edit')" class="btn btn-primary tooltips" data-placement="top" data-original-title="Edit" ><i class="fa fa-pencil"></i> </a>
             <a (click)="onOpenModal(trip, 'delete')" class="btn btn-secondary tooltips" data-placement="top" data-original-title="Delete"><i class="fa fa-times"></i></a>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" role="dialog" [ngStyle]="{'display':display8}">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button (click)="onCloseHandled8()" type="button" class="close" data-dismiss="modal" aria-label="Close" >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div *ngFor="let booking of selectedTripBookings">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Name: {{booking.user.username}}</h5>
+                <p>Email: {{booking.user.email}}</p>
+                <p>Number of Tickets: {{booking.nrTickets}}</p>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
@@ -430,6 +464,47 @@
             <div class="modal-footer">
               <button  (click)="onCloseHandled4()" type="button" id="add-answer-form" class="btn btn-secondary button" data-dismiss="modal" >Close</button>
               <button [disabled]="addForm2.invalid" type="submit" class="btn btn-primary button" >Add</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Modal -->
+  <div class="modal" id="updateProgramModal" role="dialog" [ngStyle]="{'display':display6}">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h6 class="modal-title" id="updateProgramModalLabel">Edit Program</h6>
+          <button (click)="onCloseHandled6()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form #editForm2="ngForm">
+            <div>
+              <input type="hidden" [(ngModel)]="editProgram.trip" name="trip" class="form-control form_input" id="trip3" readonly>
+            </div>
+            <!--<div>
+              <input type="hidden" [(ngModel)]="editProgram.destination" name="destination" class="form-control form_input" id="destination2" readonly>
+            </div>-->
+            <div>
+              <select ngModel name="destination" class="form-control form_input" id="destination2" required>
+                <option *ngFor="let destination of destinations" [ngValue]="destination">{{ destination.name }}</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <input type="text" [(ngModel)]="editProgram.startTime" name="startTime" class="form-control form_input" placeholder="Start Time">
+            </div>
+            <div class="form-group">
+              <input type="text" [(ngModel)]="editProgram.endTime" name="endTime" class="form-control form_input" placeholder="End Time">
+            </div>
+            <input type="hidden" [(ngModel)]="editProgram.id" name="id" class="form-control" id="id3" placeholder="Email">
+
+            <div class="modal-footer">
+              <button (click)="onCloseHandled6()" type="button" id=" " data-dismiss="modal" class="btn btn-secondary button">Close</button>
+              <button (click)="onUpdateProgram(editForm2.value)" data-dismiss="modal" class="btn btn-primary button" >Save changes</button>
             </div>
           </form>
         </div>

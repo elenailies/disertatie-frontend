@@ -30,6 +30,9 @@ export class TripComponent implements OnInit{
   public display3: String = "none";
   public display4: String = "none";
   public display5: String = "none";
+  public display6: String = "none";
+  public display7: String = "none";
+  public display8: String = "none";
   public loggedUser: User = new User();
 
   public selectedTripId: number = 0;
@@ -47,6 +50,9 @@ export class TripComponent implements OnInit{
 
   public bookings: Booking[] = [];
   public addBooking: Booking = new Booking();
+
+  public selectedTrip: Trip = new Trip();
+  public selectedTripBookings: Booking[] = [];
 
 
   constructor(private tripService: TripService, private programService: ProgramService, private bookingService: BookingService, private destinationService: DestinationService, private localStorage: LocalStorage){
@@ -198,6 +204,11 @@ export class TripComponent implements OnInit{
       this.deleteTrip = trip;
       this.display3 = "block";
     }
+    if (mode === 'bookings') {
+      this.selectedTrip = trip;
+      this.getUserTripDetails();
+      this.display8 = "block";
+    }
   }
 
   public onOpenModal2(trip: Trip, program: Program, mode: string): void {
@@ -207,6 +218,18 @@ export class TripComponent implements OnInit{
        this.display4 = "block";
      }
 
+  }
+
+ public onOpenModal4(program: Program, mode: string): void {
+
+     if (mode === 'edit') {
+       this.editProgram = program;
+       this.display6 = "block";
+     }
+   if (mode === 'delete') {
+         this.deleteProgram = program;
+         this.display7 = "block";
+       }
   }
 
   public onOpenModal3(trip: Trip, user: User, mode: string): void {
@@ -237,6 +260,18 @@ export class TripComponent implements OnInit{
 
    onCloseHandled5() {
      this.display5 = "none";
+   }
+
+   onCloseHandled6() {
+     this.display6 = "none";
+   }
+
+  onCloseHandled7() {
+     this.display7 = "none";
+   }
+
+  onCloseHandled8() {
+     this.display8 = "none";
    }
 
     public getPrograms(): void {
@@ -282,7 +317,7 @@ export class TripComponent implements OnInit{
          (response: Program) => {
            console.log(response);
            this.getPrograms();
-           this.onCloseHandled2();
+           this.onCloseHandled6();
           // console.log("update se acceseaza");
          },
          (error: HttpErrorResponse) => {
@@ -296,7 +331,7 @@ export class TripComponent implements OnInit{
          (response: void) => {
            console.log(response);
            this.getPrograms();
-           this.onCloseHandled3();
+           this.onCloseHandled7();
            //console.log("delete se acceseaza");
          },
          (error: HttpErrorResponse) => {
@@ -363,6 +398,37 @@ export class TripComponent implements OnInit{
             },
             (error: HttpErrorResponse) => {
               alert(error.message);
+            }
+          );
+        }
+
+       public onViewBookings(tripId: number): void {
+          this.tripService.getTripById(tripId).subscribe(
+            (trip: Trip) => {
+              this.selectedTrip = trip;
+              this.bookingService.getBookings().subscribe(
+                (bookings: Booking[]) => {
+                  this.selectedTripBookings = bookings.filter(booking => booking.trip.id === tripId);
+                },
+                (error: HttpErrorResponse) => {
+                  alert(error.message);
+                }
+              );
+            },
+            (error: HttpErrorResponse) => {
+              alert(error.message);
+            }
+          );
+        }
+
+       public getUserTripDetails(): void {
+          this.bookingService.getBookings().subscribe(
+            (response: Booking[]) => {
+              this.selectedTripBookings = response.filter(x => x.trip.id === this.selectedTrip.id);
+              console.log(this.selectedTrip.id);
+            },
+            (error: HttpErrorResponse) => {
+              alert('Error fetching bookings: ' + error.message);
             }
           );
         }

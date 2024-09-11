@@ -3,8 +3,8 @@ import { BookingService } from '../booking.service';
 import { Booking } from '../booking';
 import { User } from '../user';
 import { HttpErrorResponse } from '@angular/common/http';
-import { NgForm } from '@angular/forms';
 import { LocalStorage } from '@ngx-pwa/local-storage';
+import { TripService } from '../trip.service';
 import { Trip } from '../trip';
 
 @Component({
@@ -14,42 +14,74 @@ import { Trip } from '../trip';
 })
 export class userBookedTripsComponent implements OnInit {
 
- /* userTripDetails: UserTripDetails[] = [];
-  loggedUser: User = new User(); // This would typically be fetched from an auth service
+  bookings: Booking[] = [];
+  loggedUser: User = new User();
   public userIdToFind: number = 0;
+  public deleteBooking: Booking = new Booking();
+  public displayBookingDelete: String = "none";
 
-  constructor(private userTripDetailsService: UserTripDetailsService, private localStorage: LocalStorage) {
+  constructor(private bookingService: BookingService, private tripService: TripService, private localStorage: LocalStorage) {
     this.getLoggedUserAndLoadTrips();
   }
 
-  // Method to fetch logged user and then load trips
+  ngOnInit(): void {}
+
+  // Fetch the logged user and load trips
   getLoggedUserAndLoadTrips(): void {
     this.localStorage.getItem<any>('LoggedUser').subscribe((data: any) => {
-      console.log('Retrieved user from local storage:', data);
-      this.loggedUser = data as User;
-      console.log('Logged user:', this.loggedUser);
-      this.userIdToFind = this.loggedUser.id;
-
-      // Once logged user is retrieved, call getUserTripDetails
-      this.getUserTripDetails();
+      if (data) {
+        this.loggedUser = data as User;
+        this.userIdToFind = this.loggedUser.id;
+        this.getUserTripDetails();
+      }
     });
-  }*/
-
-  ngOnInit(): void {
-    // The trips will be loaded once the user is fetched in the constructor
   }
-/*
+
+  // Fetch the bookings for the logged user
   public getUserTripDetails(): void {
-    this.userTripDetailsService.getUserTripDetails().subscribe(
-      (response: UserTripDetails[]) => {
-        // Filter trips based on the logged user's ID
-        this.userTripDetails = response.filter(x => x.user.id === this.userIdToFind);
-        console.log(this.userTripDetails);
+    this.bookingService.getBookings().subscribe(
+      (response: Booking[]) => {
+        this.bookings = response.filter(x => x.user.id === this.userIdToFind);
+      },
+      (error: HttpErrorResponse) => {
+        alert('Error fetching bookings: ' + error.message);
+      }
+    );
+  }
+
+  public onOpenModal(booking: Booking, mode: string): void {
+    if (mode === 'delete') {
+      this.deleteBooking = booking;
+      this.displayBookingDelete = "block";
+    }
+  }
+
+  public onCloseHandledBookingDelete() {
+    this.displayBookingDelete = "none";
+  }
+
+  public onDeleteBooking(bookingId: number): void {
+    const trip = this.deleteBooking.trip;
+    const nr = this.deleteBooking.nrTickets;
+    this.bookingService.deleteBooking(bookingId).subscribe(
+      (response: void) => {
+        console.log('Booking deleted');
+        trip.nrTickets += nr;
+        this.tripService.updateTrip(trip).subscribe(
+          (updatedTrip: Trip) => {
+            console.log('Trip tickets updated successfully:', updatedTrip);
+            this.getUserTripDetails();
+          },
+          (error: HttpErrorResponse) => {
+            alert('Error updating trip tickets: ' + error.message);
+          }
+        );
+        this.onCloseHandledBookingDelete();
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
       }
     );
   }
-*/
+
 }
