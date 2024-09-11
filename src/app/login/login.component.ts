@@ -215,7 +215,7 @@ export class LoginComponent implements OnInit {
             },
             (error: HttpErrorResponse) => {
               console.error('Error occurred:', error);
-              this.message = 'Error sending email. Please check console for details.';
+              //this.message = 'Error sending email. Please check console for details.';
             }
       );
 
