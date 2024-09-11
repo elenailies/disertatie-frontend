@@ -206,7 +206,7 @@
     <div class="dropdown-content">
       <a routerLink='/trip'>Trips</a>
       <a routerLink='/destination'>Destinations</a>
-      <a *ngIf="loggedUser.menuRole === 'ORGANIZATOR'" routerLink='/category'>Destination Categories</a>
+      <a *ngIf="loggedUser.menuRole === 'ORGANIZATOR' || loggedUser.menuRole === 'ADMIN'" routerLink='/category'>Destination Categories</a>
     </div>
   </div>
   <a *ngIf="loggedUser && loggedUser.role === 'VISITOR'" routerLink='/registration'>Register</a>
