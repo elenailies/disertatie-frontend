@@ -308,16 +308,16 @@
         <div class="modal-body">
           <form #editForm="ngForm">
             <div>
-              <input type="hidden" ngModel="{{editQuestion.user}}" name="user" class="form-control form_input" id="user2" readonly>
+              <input type="hidden" [(ngModel)]="editQuestion.user" name="user" class="form-control form_input" id="user2" readonly>
             </div>
             <div class="form-group">
-              <input type="text" ngModel="{{editQuestion.title}}" name="title" class="form-control form_input" placeholder="title">
+              <input type="text" [(ngModel)]="editQuestion.title" name="title" class="form-control form_input" placeholder="title">
             </div>
             <div class="form-group">
-              <input type="text" ngModel="{{editQuestion.description}}" name="description" class="form-control form_input" placeholder="description">
+              <input type="text" [(ngModel)]="editQuestion.description" name="description" class="form-control form_input" placeholder="description">
             </div>
 
-            <input type="hidden" ngModel="{{editQuestion.id}}" name="id" class="form-control form_input" id="id" placeholder="Email">
+            <input type="hidden" [(ngModel)]="editQuestion.id" name="id" class="form-control form_input" id="id" placeholder="Email">
 
             <div class="modal-footer">
               <button (click)="onCloseHandled2()" type="button" id="" data-dismiss="modal" class="btn btn-secondary button">Close</button>
@@ -376,6 +376,12 @@
               <div class="card-body">
                 <p>Answer: {{answer.content}}</p>
               </div>
+              <div class="card-body">
+                <div class="float-right btn-group btn-group-sm edit_delete_buttons">
+                  <a (click)="onOpenModal3(answer, 'edit')" class="btn btn-primary tooltips" data-placement="top" data-original-title="Edit" ><i class="fa fa-pencil"></i> </a>
+                  <a (click)="onOpenModal3(answer, 'delete')" class="btn btn-secondary tooltips" data-placement="top" data-original-title="Delete"><i class="fa fa-times"></i></a>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -413,6 +419,61 @@
               <button [disabled]="addForm2.invalid" type="submit" class="btn btn-primary button" >Respond</button>
             </div>
           </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Modal -->
+  <div class="modal" id="updateAnswerModal" role="dialog" [ngStyle]="{'display':display6}">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h6 class="modal-title" id="updateAnswerModalLabel">Edit Answer</h6>
+          <button (click)="onCloseHandled6()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form #editForm2="ngForm">
+            <div>
+              <input type="hidden" [(ngModel)]="editAnswer.user" name="user" class="form-control form_input" id="user4" readonly>
+            </div>
+            <div>
+              <input type="hidden" [(ngModel)]="editAnswer.question" name="question" class="form-control form_input" id="question2" readonly>
+            </div>
+            <div class="form-group">
+              <input type="text" [(ngModel)]="editAnswer.content" name="content" class="form-control form_input" placeholder="content">
+            </div>
+
+            <input type="hidden" [(ngModel)]="editAnswer.id" name="id" class="form-control form_input" id="id2" placeholder="Email">
+
+            <div class="modal-footer">
+              <button (click)="onCloseHandled6()" type="button" id=" " data-dismiss="modal" class="btn btn-secondary button">Close</button>
+              <button (click)="onUpdateAnswer(editForm2.value)" data-dismiss="modal" class="btn btn-primary button" >Save changes</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete Modal -->
+  <div class="modal" id="deleteAnswerModal" role="dialog" [ngStyle]="{'display':display7}">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h6 class="modal-title" id="deleteModelLabel2">Delete Answer</h6>
+          <button (click)="onCloseHandled7()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p class="modal_text">Are you sure you want to delete answer?</p>
+          <div class="modal-footer">
+            <button (click)="onCloseHandled7()" type="button" class="btn btn-secondary button" data-dismiss="modal">No</button>
+            <button (click)="onDeleteAnswer(deleteAnswer.id)" class="btn btn-danger button" data-dismiss="modal">Yes</button>
+          </div>
         </div>
       </div>
     </div>

@@ -27,6 +27,8 @@ export class questionComponent implements OnInit{
   public display3: String = "none";
   public display4: String = "none";
   public display5: String = "none";
+  public display6: String = "none";
+  public display7: String = "none";
   public loggedUser: User = new User();
 
   public selectedQuestionId: number = 0;
@@ -100,6 +102,7 @@ export class questionComponent implements OnInit{
 
 
   public onUpdateQuestion(question: Question): void {
+    question.user = this.editQuestion.user;
     this.questionService.updateQuestion(question).subscribe(
       (response: Question) => {
         console.log(response);
@@ -175,14 +178,25 @@ export class questionComponent implements OnInit{
   }
 
   public onOpenModal2(answer: Answer, question: Question, mode: string): void {
-
     if (mode === 'addA') {
         this.ansQuestion = question;
         console.log("this.ansQuestion: ", this.ansQuestion);
         this.display5 = "block";
     }
-
   }
+
+public onOpenModal3(answer: Answer, mode: string): void {
+  if (mode === 'edit') {
+          this.editAnswer = answer;
+          this.display6 = "block";
+      }
+    if (mode === 'delete') {
+          this.deleteAnswer = answer;
+          //button.setAttribute('data-bs-target', '#deleteQuestionModal');
+          this.display7 = "block";
+        }
+  }
+
   onCloseHandled() {
       this.display = "none";
 
@@ -205,6 +219,14 @@ export class questionComponent implements OnInit{
 
    onCloseHandled5() {
      this.display5 = "none";
+
+   }
+  onCloseHandled6() {
+      this.display6 = "none";
+
+   }
+  onCloseHandled7() {
+        this.display7 = "none";
 
    }
 
@@ -248,11 +270,12 @@ export class questionComponent implements OnInit{
 
 
    public onUpdateAnswer(answer: Answer): void {
+     answer.user = this.editAnswer.user;
      this.answerService.updateAnswer(answer).subscribe(
        (response: Answer) => {
          console.log(response);
          this.getAnswers();
-         this.onCloseHandled2();
+         this.onCloseHandled6();
         // console.log("update se acceseaza");
        },
        (error: HttpErrorResponse) => {
@@ -266,7 +289,7 @@ export class questionComponent implements OnInit{
        (response: void) => {
          console.log(response);
          this.getAnswers();
-         this.onCloseHandled3();
+         this.onCloseHandled7();
          //console.log("delete se acceseaza");
        },
        (error: HttpErrorResponse) => {
