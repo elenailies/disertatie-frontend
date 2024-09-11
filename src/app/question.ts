@@ -6,6 +6,7 @@ export class Question {
   title: string = '';
   description: string = '';
   user: User = new User();
+  enabled: boolean = true;
 
   // Linking to Answer
   answers: Answer[] = [];

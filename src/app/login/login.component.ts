@@ -98,10 +98,10 @@ export class LoginComponent implements OnInit {
 
       // Create a new token
       const token = new Token();
-      token.tokenValue = uuidv4(); // Generate a unique token value
+      token.tokenValue = uuidv4();
       token.expiryDate = new Date();
-      token.expiryDate.setHours(token.expiryDate.getHours() + 3); // Add 3 hours
-      token.expiryDate.setMinutes(token.expiryDate.getMinutes() + 5); // Add 5 minutes
+      token.expiryDate.setHours(token.expiryDate.getHours() + 3);
+      token.expiryDate.setMinutes(token.expiryDate.getMinutes() + 5);
       token.user = this.currentUser;
 
       // Save the token

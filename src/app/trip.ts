@@ -7,4 +7,5 @@ export class Trip {
   nrTickets: number = 0;
   date: string = '';
   map: string = '';
+  enabled: boolean = true;
 }
